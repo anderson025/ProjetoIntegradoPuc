@@ -36,12 +36,12 @@ namespace ClinicaFisioterapia.Controllers {
 
 		// PUT api/<FuncionariosController>/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value) {
+		public void AtualizaFuncionario(int id, [FromBody] string value) {
 		}
 
 		// DELETE api/<FuncionariosController>/5
 		[HttpDelete("{id}")]
-		public void Delete(int id) {
+		public void ApagaFuncionario(int id) {
 		}
 	}
 }

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 namespace ClinicaFisioterapia.Services {
 	public interface IFuncionarioService {
 
-		Task<IEnumerable<Funcionario>> GetFuncionario();
+		Task<IEnumerable<Funcionario>> BuscaFuncionario();
+		Task<Funcionario> BuscaFuncionarioPorId(int id);
+		Task AdicionaFuncionario(Funcionario funcionario);
+
+		Task AtualizaFuncionario(int id, Funcionario funcionario);
+		Task ApagaFuncionario(int id);
 	}
 }
