@@ -74,7 +74,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 		
 		[HttpPost]
-		public async Task<ActionResult> AdicionaFuncionario([FromBody] Funcionario func) {
+		public async Task<ActionResult> AdicionaFuncionario(int id , [FromBody] Funcionario func) {
 
 			try {
 				await _funcionarioService.AdicionaFuncionario(func);
@@ -89,13 +89,44 @@ namespace ClinicaFisioterapia.Controllers {
 		}
 
 		
-		[HttpPut("{id}")]
-		public void AtualizaFuncionario(int id, [FromBody] string value) {
+		[HttpPut("{id:int}")]
+		public async Task<ActionResult> AtualizaFuncionario(int id, [FromBody] Funcionario funcionario) {
+
+			try {
+				if (funcionario.Id == id) {
+					await _funcionarioService.AtualizaFuncionario(funcionario);
+					return Ok($"Aluno com id= {id} foi atualizado com sucesso");
+				}
+				else {
+					return BadRequest("Erro na atualização");
+				}
+			}
+			catch {
+
+				return BadRequest("Erro na requisição");
+			}
 		}
 
 		
 		[HttpDelete("{id}")]
-		public void ApagaFuncionario(int id) {
+		public async Task<ActionResult> ApagaFuncionario(int id) {
+
+			try {
+				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
+
+				if (funcionario != null) {
+					await _funcionarioService.ApagaFuncionario(funcionario);
+					return Ok($"Aluno de id {id} foi excluido com sucesso!");
+				}
+				else {
+					return NotFound($"Aluno com id {id} não localizado");
+				}
+				 
+			}
+			catch  {
+
+				return BadRequest("Requisição inválida!");
+			}
 		}
 	}
 }
