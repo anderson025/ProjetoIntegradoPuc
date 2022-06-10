@@ -41,7 +41,7 @@ namespace ClinicaFisioterapia.Services {
 		}
 
 		public async Task<Funcionario> BuscaFuncionarioPorId(int id) {
-			var funcionario = await _context.Funcionario.FindAsync();
+			var funcionario = await _context.Funcionario.FindAsync(id);
 			return funcionario;
 		}
 
