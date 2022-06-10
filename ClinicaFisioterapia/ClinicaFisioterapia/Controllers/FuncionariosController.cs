@@ -1,6 +1,10 @@
 ﻿using ClinicaFisioterapia.Models;
+using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,35 +15,85 @@ namespace ClinicaFisioterapia.Controllers {
 	public class FuncionariosController : ControllerBase {
 
 
-		private static List<Funcionario> listaFuncinarios = new List<Funcionario>();
-		public static int id = 1;
+		private IFuncionarioService _funcionarioService;
 
-		// GET: api/<FuncionariosController>
+		public FuncionariosController(IFuncionarioService funcionarioService) { 
+			_funcionarioService = funcionarioService;
+		}
+
+		
 		[HttpGet]
-		public IEnumerable<Funcionario> BuscaFuncionario() {
-			return listaFuncinarios;
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionario() {
+
+			try {
+				var funcionarios = await _funcionarioService.BuscaFuncionario();
+				return Ok(funcionarios);
+			}
+			catch  {
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Funcionarios");
+			}
 		}
 
-		// GET api/<FuncionariosController>/5
-		[HttpGet("{id}")]
-		public string BuscaFuncionarioPorId(int id) {
-			return "value";
+		[HttpGet("BuscaFuncionarioPorNome")]
+		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionarioPorNome([FromQuery]string nome) {
+
+			try {
+				var funcionarios = await _funcionarioService.BuscaPorNome(nome);
+				if (funcionarios.Count() == 0) {
+					return NotFound($"Não existe o funcionário {nome}");
+				}
+				return Ok(funcionarios);
+			}
+			catch {
+
+				return BadRequest("Requisição inválida");
+			}
 		}
 
-		// POST api/<FuncionariosController>
+		
+		[HttpGet("{id:int}", Name = "BuscaFuncionarioPorId")]
+		public async Task<ActionResult<Funcionario>> BuscaFuncionarioPorId(int id) {
+
+			try {
+				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
+
+				if (funcionario == null) {
+					return NotFound($"Não existe o funcionário com id {id}");
+				}
+				return Ok(funcionario);
+			}
+			catch  {
+
+				return NotFound("Erro na requisição");
+			}
+			 
+		}
+
+		
 		[HttpPost]
-		public void AdicionaFuncionario([FromBody] Funcionario value) {
+		public async Task<ActionResult> AdicionaFuncionario([FromBody] Funcionario func) {
 
-			listaFuncinarios.Add(value);
-			
+			try {
+				await _funcionarioService.AdicionaFuncionario(func);
+
+				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = func.Id}, func);
+			}
+			catch {
+
+				return BadRequest("Erro na requisição");
+			}
+
 		}
 
-		// PUT api/<FuncionariosController>/5
+		
 		[HttpPut("{id}")]
 		public void AtualizaFuncionario(int id, [FromBody] string value) {
 		}
 
-		// DELETE api/<FuncionariosController>/5
+		
 		[HttpDelete("{id}")]
 		public void ApagaFuncionario(int id) {
 		}

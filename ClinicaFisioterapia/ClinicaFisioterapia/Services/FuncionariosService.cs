@@ -1,28 +1,61 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using ClinicaFisioterapia.Context;
+using ClinicaFisioterapia.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Services {
 	public class FuncionariosService : IFuncionarioService {
 
-		public Task AdicionaFuncionario(Funcionario funcionario) {
-			throw new System.NotImplementedException();
+		private readonly AppDbContext _context;
+
+		public FuncionariosService(AppDbContext context) {
+			_context = context;
+		}
+			
+		public async Task AdicionaFuncionario(Funcionario funcionario) {
+			_context.Funcionario.Add(funcionario);
+			await _context.SaveChangesAsync();
 		}
 
-		public Task ApagaFuncionario(int id) {
-			throw new System.NotImplementedException();
+		public async Task ApagaFuncionario(Funcionario funcionario) {
+			_context.Funcionario.Remove(funcionario);
+			await _context.SaveChangesAsync();
 		}
 
-		public Task AtualizaFuncionario(int id, Funcionario funcionario) {
-			throw new System.NotImplementedException();
+		public async Task AtualizaFuncionario(Funcionario funcionario) {
+			_context.Entry(funcionario).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
 		}
 
-		public Task<IEnumerable<Funcionario>> BuscaFuncionario() {
-			throw new System.NotImplementedException();
+		public async Task<IEnumerable<Funcionario>> BuscaFuncionario() {
+			try {
+				return await _context.Funcionario.ToListAsync();
+			}
+			catch  {
+
+				throw;
+			}
+			
 		}
 
-		public Task<Funcionario> BuscaFuncionarioPorId(int id) {
-			throw new System.NotImplementedException();
+		public async Task<Funcionario> BuscaFuncionarioPorId(int id) {
+			var funcionario = await _context.Funcionario.FindAsync();
+			return funcionario;
+		}
+
+		public async Task<IEnumerable<Funcionario>> BuscaPorNome(string nome) {
+			IEnumerable<Funcionario> funcionarios;
+
+			if (!string.IsNullOrWhiteSpace(nome)) {
+				funcionarios = await _context.Funcionario.Where(n => n.Nome.Contains(nome)).ToListAsync();
+			}
+			else {
+				funcionarios = await BuscaFuncionario();
+			}
+
+			return funcionarios;
 		}
 	}
 }

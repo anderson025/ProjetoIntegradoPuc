@@ -25,7 +25,7 @@ namespace ClinicaFisioterapia.Models {
 		public String Convenio { get; set; }
 		public Int32 CarteiraConvenio { get; set; }
 		[Required]
-		public Endereco Endereco { get; set; }
+		public virtual Endereco Endereco { get; set; }
 		public Int32 EnderecoId { get; set; }
 		[Required]
 		public String Usuario { get; set; }

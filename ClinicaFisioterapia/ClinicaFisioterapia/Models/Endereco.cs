@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ClinicaFisioterapia.Models {
 	public class Endereco {
@@ -15,6 +16,7 @@ namespace ClinicaFisioterapia.Models {
 		public String Cidade { get; set; }
 		public String Estado { get; set; }
 		public String Uf { get; set; }
-		public Funcionario Funcionario { get; set; }
+		[JsonIgnore]
+		public virtual Funcionario Funcionario { get; set; }
 	}
 }
