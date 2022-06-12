@@ -1,5 +1,6 @@
 ﻿using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Controllers {
 
-	[Route("[controller]")]
-	[ApiController]
+	[Route("api/[controller]")]
+	[ApiController]	
 	public class FuncionariosController : ControllerBase {
 
 
@@ -24,7 +25,7 @@ namespace ClinicaFisioterapia.Controllers {
 		
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]		
 		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionario() {
 
 			try {
@@ -95,7 +96,7 @@ namespace ClinicaFisioterapia.Controllers {
 			try {
 				if (funcionario.Id == id) {
 					await _funcionarioService.AtualizaFuncionario(funcionario);
-					return Ok($"Aluno com id= {id} foi atualizado com sucesso");
+					return Ok($"Funcionario com id= {id} foi atualizado com sucesso");
 				}
 				else {
 					return BadRequest("Erro na atualização");
@@ -116,10 +117,10 @@ namespace ClinicaFisioterapia.Controllers {
 
 				if (funcionario != null) {
 					await _funcionarioService.ApagaFuncionario(funcionario);
-					return Ok($"Aluno de id {id} foi excluido com sucesso!");
+					return Ok($"Funcionario de id {id} foi excluido com sucesso!");
 				}
 				else {
-					return NotFound($"Aluno com id {id} não localizado");
+					return NotFound($"Funcionario com id {id} não localizado");
 				}
 				 
 			}

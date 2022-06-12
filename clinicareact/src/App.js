@@ -1,62 +1,70 @@
-import './App.css';
-import React, {useState, useEffect} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import { Form } from 'reactstrap';
+import React, {useState} from 'react';
 
-const baseUrl ="https://localhost:44365/Funcionarios";
+export default function App() {
+  const [posts, setPosts] = useState([]);
 
-function App() {
+  function getPosts(){
+    const baseURL = "https://localhost:5001/api/Funcionarios";
 
-  
-  const [user, setData] = useState([]);
-
-  const funcionarioGet = () =>{
-    axios.get(baseUrl)
-    .then(response => {
-      setData(response.data)
-    }).catch(error=> {
-      console.log(error);
+    fetch(baseURL,{
+      method:'GET'
     })
+    .then(response => response.json())
+    .then(postsFromServer =>{
+      console.log(postsFromServer);
+      setPosts(postsFromServer);
+    })
+    .catch((error) => {
+      console.log(error);
+      alert(error);
+    });
   }
 
-  useEffect(()=>{
-    funcionarioGet();
-  })
-
   return (
-    <div className="App">
-      <br/>
-      <h3>Cadastro de funcionarios</h3>      
-      <header>
-             
-      </header>
-      <table className='table table-bordered'>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nome</th>
-          </tr>
-        </thead>    
-       
-                  
-          
-      <tbody>     
+    <div className="container">
+      <div className="row min-vh-100">
+        <div className="col d-flex flex-colums justify-content-center align-items-center">
+          <div>
+            <h1>Cadastro funcionario</h1>
+            <div className="mt-5">
+              <button onClick={getPosts} className="btn btn-dark btn-lg w-100"> Busca servidor</button>
+              <button onClick={() => {}} className="btn btn-secondary btn-lg w-100 mt-4">Novo</button>
+            </div> 
+          </div>  
 
-      {user.map(funcionario =>(
-        <tr key={funcionario.id}>
-          <td>{funcionario.id}</td>
-        </tr>
-      ))}
-        
-        
-        
-      </tbody>
-      </table>
+
+          {renderPostsTable()}
+        </div>   
+      </div>       
     </div>
   );
+
+  function renderPostsTable(){
+    return(
+      <div className="table-responsive mt-5">
+        <table className="table table-bordered border-dark">
+          <thead>
+            <tr>
+              <th scope="col">Chave</th>
+              <th scope="col">Id</th>
+              <th scope="col">Nome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>1</td>              
+              <td>Anderson</td>
+            </tr>
+        </tbody>     
+        </table>
+        
+
+      </div>
+
+    );
+  }
 }
 
 
-export default App;
+

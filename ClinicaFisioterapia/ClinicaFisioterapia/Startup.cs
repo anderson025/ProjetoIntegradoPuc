@@ -32,9 +32,20 @@ namespace ClinicaFisioterapia {
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClinicaFisioterapia", Version = "v1" });
 			});
 
-			services.AddScoped<IFuncionarioService,FuncionariosService>();
-		}
+			services.AddScoped<IFuncionarioService, FuncionariosService>();
 
+			//services.AddCors();
+			services.AddCors(options => {
+				options.AddPolicy("CORSPolicy", builder => {
+					builder
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.WithOrigins("http://localhost:3000/", "https://appname.azurestaticapps.net");
+
+				});
+
+			});
+		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 			if (env.IsDevelopment()) {
@@ -52,6 +63,19 @@ namespace ClinicaFisioterapia {
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();
 			});
+
+			//app.UseCors(options => {
+			//	options.AllowAnyOrigin();
+			//	options.AllowAnyMethod();
+			//	options.AllowAnyHeader();
+
+			//});
+
+			app.UseCors("CORSPolicy");
+			//app.UseCors(option => option.WithOrigins("http://localhost:3000/"));
+			//app.UseCors(option => option.WithHeaders("accept", "content-type", "origin"));
+			//app.UseCors(option => option.WithMethods("GET","POST"));
+
 		}
 	}
 }
