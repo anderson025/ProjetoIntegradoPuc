@@ -34,17 +34,17 @@ namespace ClinicaFisioterapia {
 
 			services.AddScoped<IFuncionarioService, FuncionariosService>();
 
-			//services.AddCors();
-			services.AddCors(options => {
-				options.AddPolicy("CORSPolicy", builder => {
-					builder
-					.AllowAnyMethod()
-					.AllowAnyHeader()
-					.WithOrigins("http://localhost:3000/", "https://appname.azurestaticapps.net");
+			services.AddCors();
+			//services.AddCors(options => {
+			//	options.AddPolicy("CORSPolicy", builder => {
+			//		builder
+			//		.AllowAnyMethod()
+			//		.AllowAnyHeader()
+			//		.WithOrigins("http://localhost:3000/", "https://appname.azurestaticapps.net");
 
-				});
+			//	});
 
-			});
+			//});
 		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -57,6 +57,13 @@ namespace ClinicaFisioterapia {
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseCors(options => {
+				options.AllowAnyOrigin();
+				options.AllowAnyMethod();
+				options.AllowAnyHeader();
+
+			});
 
 			app.UseAuthorization();
 
@@ -71,7 +78,7 @@ namespace ClinicaFisioterapia {
 
 			//});
 
-			app.UseCors("CORSPolicy");
+			//app.UseCors("CORSPolicy");
 			//app.UseCors(option => option.WithOrigins("http://localhost:3000/"));
 			//app.UseCors(option => option.WithHeaders("accept", "content-type", "origin"));
 			//app.UseCors(option => option.WithMethods("GET","POST"));

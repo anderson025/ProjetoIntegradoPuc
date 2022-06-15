@@ -1,5 +1,4 @@
 ﻿namespace ClinicaFisioterapia.Models {
-	public class Paciente : Pessoa {
-
+	public class Medico {
 	}
 }
