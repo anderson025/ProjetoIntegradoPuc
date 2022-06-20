@@ -1,37 +1,11 @@
-.funcionario-container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 5 10px;
-    margin: 30px auto;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.funcionario-container header{
-    display: flex;
-    align-items: center;
-}
-
-.funcionario-container header button{
-    height: 50px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #dcdce6;
-    background-color: green;
-    margin-left: 16px;
-    transition: border-color 0.5s;  
-    color: #dcdce6; 
-
-}
-
-.funcionario-container header button:hover{
-    border-color: #510bac;
-
-}
-
-table,th,td{
-    border: 1px solid black;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 20px;
-    text-align: left;
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffff;
 }
