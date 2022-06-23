@@ -11,6 +11,7 @@ namespace ClinicaFisioterapia.Models {
 
 		public DateTime DataAgendamento { get; set; }
 
-		public TimeSpan HorarioAgendamento { get; set; }
+		public virtual HorarioAgendamento HorarioAgendamento { get; set; }
+		public Int32 IdHorario { get; set; }
 	}
 }
