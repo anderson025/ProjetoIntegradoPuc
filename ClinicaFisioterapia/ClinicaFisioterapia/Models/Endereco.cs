@@ -18,5 +18,7 @@ namespace ClinicaFisioterapia.Models {
 		public String Uf { get; set; }
 		[JsonIgnore]
 		public virtual Funcionario Funcionario { get; set; }
+		[JsonIgnore]
+		public virtual Paciente Paciente { get; set; }
 	}
 }
