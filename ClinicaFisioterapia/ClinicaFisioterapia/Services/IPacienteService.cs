@@ -15,7 +15,7 @@ namespace ClinicaFisioterapia.Services {
 
 		Task AtualizaPaciente(Paciente paciente);
 
-		Task ApagaFuncionario(Paciente paciente);
+		Task ApagaPaciente(Paciente paciente);
 
 		Task<IEnumerable<Paciente>> BuscaPorNome(String nome);
 	}

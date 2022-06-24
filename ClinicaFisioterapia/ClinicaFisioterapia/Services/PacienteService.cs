@@ -20,7 +20,7 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task ApagaFuncionario(Paciente paciente) {
+		public async Task ApagaPaciente(Paciente paciente) {
 			_context.Pacientes.Remove(paciente);
 			await _context.SaveChangesAsync();
 		}
