@@ -33,6 +33,7 @@ namespace ClinicaFisioterapia {
 			});
 
 			services.AddScoped<IFuncionarioService, FuncionariosService>();
+			services.AddScoped<IPacienteService, PacienteService>();
 
 			services.AddCors();
 			//services.AddCors(options => {

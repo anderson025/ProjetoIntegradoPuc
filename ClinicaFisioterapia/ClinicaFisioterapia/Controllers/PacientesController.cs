@@ -68,8 +68,8 @@ namespace ClinicaFisioterapia.Controllers {
 		}
 
 
-		[HttpPost]
-		public async Task<ActionResult> AdicionaPaciente(Int32 id, [FromBody] Paciente paciente) {
+		[HttpPost(Name ="AdicionaPaciente")]
+		public async Task<ActionResult> AdicionaPaciente([FromBody] Paciente paciente) {
 
 			try {
 				await _pacienteService.AdicionaPaciente(paciente);

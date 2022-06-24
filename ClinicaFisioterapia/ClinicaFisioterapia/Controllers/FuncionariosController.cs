@@ -3,6 +3,7 @@ using ClinicaFisioterapia.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 		
 		[HttpPost]
-		public async Task<ActionResult> AdicionaFuncionario(int id , [FromBody] Funcionario func) {
+		public async Task<ActionResult> AdicionaFuncionario(Int32 id , [FromBody] Funcionario func) {
 
 			try {
 				await _funcionarioService.AdicionaFuncionario(func);
