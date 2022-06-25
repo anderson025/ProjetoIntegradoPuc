@@ -1,4 +1,6 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using AutoMapper;
+using ClinicaFisioterapia.Context.Dtos;
+using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +15,11 @@ namespace ClinicaFisioterapia.Controllers {
 	public class PacientesController : Controller {
 
 		private IPacienteService _pacienteService;
+		private IMapper _mapper;
 
-		public PacientesController(IPacienteService pacienteService) {
+		public PacientesController(IPacienteService pacienteService, IMapper mapper) {
 			_pacienteService = pacienteService;
+			_mapper = mapper;
 		}
 
 		[HttpGet]
@@ -69,8 +73,9 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		[HttpPost(Name ="AdicionaPaciente")]
-		public async Task<ActionResult> AdicionaPaciente([FromBody] Paciente paciente) {
+		public async Task<ActionResult> AdicionaPaciente([FromBody] PacienteDTO pacienteDTO) {
 
+			Paciente paciente = _mapper.Map<Paciente>(pacienteDTO);
 			try {
 				await _pacienteService.AdicionaPaciente(paciente);
 

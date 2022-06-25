@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "NnnZaUHwCpwdSg2N3fkhtiFsy0Kc7qNSljG9meteTDIBjxAw3aePEvsK9ENMGptR8aVTKLw+Limma9G6/xcxIw==",
+  "dgSpecHash": "pcUhQ6f9nUVhFwbXa0xSLrjdrAMir59ojuRuZWBmPZg0KtFkbCaoUQw05fJgtRKYzkSUHoUTa5dUVyeGouBmgw==",
   "success": true,
   "projectFilePath": "C:\\Users\\anderson.barbosa\\Desktop\\Pos\\Projeto integrado\\ClinicaFisioterapia\\ClinicaFisioterapia\\ClinicaFisioterapia.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\anderson.barbosa\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\anderson.barbosa\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\anderson.barbosa\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\anderson.barbosa\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\anderson.barbosa\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
@@ -118,7 +120,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.net.sockets\\4.3.0\\system.net.sockets.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.objectmodel\\4.3.0\\system.objectmodel.4.3.0.nupkg.sha512",
     "C:\\Users\\anderson.barbosa\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
-    "C:\\Users\\anderson.barbosa\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
+    "C:\\Users\\anderson.barbosa\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",

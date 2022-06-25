@@ -1,4 +1,6 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using AutoMapper;
+using ClinicaFisioterapia.Context.Dtos;
+using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +20,11 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		private IFuncionarioService _funcionarioService;
+		private IMapper _mapper;
 
-		public FuncionariosController(IFuncionarioService funcionarioService) { 
+		public FuncionariosController(IFuncionarioService funcionarioService, IMapper mapper) { 
 			_funcionarioService = funcionarioService;
+			_mapper = mapper;
 		}
 
 		
@@ -76,12 +80,14 @@ namespace ClinicaFisioterapia.Controllers {
 
 		
 		[HttpPost]
-		public async Task<ActionResult> AdicionaFuncionario(Int32 id , [FromBody] Funcionario func) {
+		public async Task<ActionResult> AdicionaFuncionario([FromBody] FuncionarioDTO funcionarioDto) {
+
+			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
 
 			try {
-				await _funcionarioService.AdicionaFuncionario(func);
+				await _funcionarioService.AdicionaFuncionario(funcionario);
 
-				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = func.Id}, func);
+				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = funcionario.Id}, funcionario);
 			}
 			catch {
 

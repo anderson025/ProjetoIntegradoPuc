@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from './components/Header.js';
 import { Footer } from './components/Footer';
 import { FuncionarioService } from './api/FuncionarioService';
-import { Funcionario } from './views/Funcionario';
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";
 

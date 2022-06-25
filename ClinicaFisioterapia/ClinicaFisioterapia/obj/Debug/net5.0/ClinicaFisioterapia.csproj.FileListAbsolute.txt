@@ -50,3 +50,5 @@ C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\Clin
 C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\ClinicaFisioterapia\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\ClinicaFisioterapia\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\ClinicaFisioterapia\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\ClinicaFisioterapia\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\anderson.barbosa\Desktop\Pos\Projeto integrado\ClinicaFisioterapia\ClinicaFisioterapia\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
