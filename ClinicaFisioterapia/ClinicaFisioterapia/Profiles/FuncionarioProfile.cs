@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using ClinicaFisioterapia.Context.Dtos;
+using ClinicaFisioterapia.Context.Dtos.Endereco;
+using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Models;
 
 namespace ClinicaFisioterapia.Profiles {
@@ -8,7 +9,16 @@ namespace ClinicaFisioterapia.Profiles {
 		public FuncionarioProfile() {
 
 			CreateMap<FuncionarioDTO, Funcionario>();
+			CreateMap<Funcionario, ExibiFuncionarioDTO>();
+			CreateMap<ExibiFuncionarioDTO, Funcionario>();
+			CreateMap<ExibiFuncionarioDTO, FuncionarioDTO>();
+			CreateMap<FuncionarioDTO, ExibiFuncionarioDTO>();
+
 			CreateMap<EnderecoDTO, Endereco>();
+			CreateMap<Endereco, EnderecoDTO>();
+			CreateMap<Endereco, ExibiFuncionarioDTO>();
+			CreateMap<ExibiFuncionarioDTO, Endereco>();
+
 		}
 	}
 }

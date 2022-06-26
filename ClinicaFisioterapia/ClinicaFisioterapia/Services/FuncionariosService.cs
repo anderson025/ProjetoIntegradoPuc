@@ -1,4 +1,6 @@
-﻿using ClinicaFisioterapia.Context;
+﻿using AutoMapper;
+using ClinicaFisioterapia.Context;
+using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -9,14 +11,21 @@ namespace ClinicaFisioterapia.Services {
 	public class FuncionariosService : IFuncionarioService {
 
 		private readonly AppDbContext _context;
+		private IMapper _mapper;
 
-		public FuncionariosService(AppDbContext context) {
+		public FuncionariosService(AppDbContext context, IMapper mapper) {
 			_context = context;
+			_mapper = mapper;
 		}
-			
-		public async Task AdicionaFuncionario(Funcionario funcionario) {
+				
+
+		public async Task<ExibiFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto) {
+
+			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
 			_context.Funcionario.Add(funcionario);
 			await _context.SaveChangesAsync();
+			return _mapper.Map<ExibiFuncionarioDTO>(funcionario);
+			
 		}
 
 		public async Task ApagaFuncionario(Funcionario funcionario) {
@@ -41,7 +50,9 @@ namespace ClinicaFisioterapia.Services {
 		}
 
 		public async Task<Funcionario> BuscaFuncionarioPorId(int id) {
+			
 			var funcionario = await _context.Funcionario.FindAsync(id);
+			ExibiFuncionarioDTO funcionarioDTO = _mapper.Map<ExibiFuncionarioDTO>(funcionario);
 			return funcionario;
 		}
 
@@ -57,5 +68,7 @@ namespace ClinicaFisioterapia.Services {
 
 			return funcionarios;
 		}
+
+		
 	}
 }

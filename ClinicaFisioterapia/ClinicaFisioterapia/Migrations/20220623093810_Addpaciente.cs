@@ -45,6 +45,7 @@ namespace ClinicaFisioterapia.Migrations
                 table: "Pacientes",
                 column: "EnderecoId",
                 unique: true);
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

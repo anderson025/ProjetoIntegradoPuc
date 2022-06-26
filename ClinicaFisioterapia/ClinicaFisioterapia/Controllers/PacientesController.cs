@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClinicaFisioterapia.Context.Dtos;
+using ClinicaFisioterapia.Context.Dtos.Paciente;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
 using Microsoft.AspNetCore.Http;

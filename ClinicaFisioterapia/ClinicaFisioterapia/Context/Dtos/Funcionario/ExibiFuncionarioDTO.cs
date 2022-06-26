@@ -1,10 +1,14 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using ClinicaFisioterapia.Context.Dtos.Endereco;
+using ClinicaFisioterapia.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace ClinicaFisioterapia.Context.Dtos {
-	public class PacienteDTO {
+namespace ClinicaFisioterapia.Context.Dtos.Funcionario {
+	public class ExibiFuncionarioDTO {
 
+		[Key]
+		public Int32 Id { get; set; }
 		[Required]
 		public string Nome { get; set; }
 		[Required]
@@ -23,13 +27,16 @@ namespace ClinicaFisioterapia.Context.Dtos {
 		public Profissao Profissao { get; set; }
 		public String Convenio { get; set; }
 		public Int32 CarteiraConvenio { get; set; }
-		[Required]
+		
 		public virtual EnderecoDTO Endereco { get; set; }
 		public Int32 EnderecoId { get; set; }
 
 		[Required]
 		[EmailAddress]
 		public String Email { get; set; }
-		
+
+		[Required]
+		public String Usuario { get; set; }
+	
 	}
 }

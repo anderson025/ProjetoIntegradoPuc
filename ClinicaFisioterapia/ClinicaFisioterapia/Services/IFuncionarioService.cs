@@ -1,4 +1,5 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using ClinicaFisioterapia.Context.Dtos.Funcionario;
+using ClinicaFisioterapia.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<Funcionario> BuscaFuncionarioPorId(Int32 id);
 
-		Task AdicionaFuncionario(Funcionario funcionario);
+		Task<ExibiFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto);
 
 		Task AtualizaFuncionario(Funcionario funcionario);
 

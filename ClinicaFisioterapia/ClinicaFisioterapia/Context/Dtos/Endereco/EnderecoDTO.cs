@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ClinicaFisioterapia.Context.Dtos.Funcionario;
+using ClinicaFisioterapia.Context.Dtos.Paciente;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace ClinicaFisioterapia.Context.Dtos {
+namespace ClinicaFisioterapia.Context.Dtos.Endereco {
 	public class EnderecoDTO {
 
 		public String Rua { get; set; }

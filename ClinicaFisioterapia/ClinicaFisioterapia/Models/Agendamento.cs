@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClinicaFisioterapia.Models {
@@ -9,9 +10,13 @@ namespace ClinicaFisioterapia.Models {
 		public Funcionario Funcionario { get; set; }
 		public Paciente Paciente { get; set; }
 
-		public DateTime DataAgendamento { get; set; }
+		public DateTime DataInicio { get; set; }
+		public DateTime DataFim { get; set; }
 
-		public virtual HorarioAgendamento HorarioAgendamento { get; set; }
+		public virtual ICollection<HorarioAgendamento> Horarios { get; set; }
+		
 		public Int32 IdHorario { get; set; }
 	}
+
+	
 }

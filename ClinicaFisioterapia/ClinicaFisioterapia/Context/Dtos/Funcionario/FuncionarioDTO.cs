@@ -1,8 +1,9 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using ClinicaFisioterapia.Context.Dtos.Endereco;
+using ClinicaFisioterapia.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ClinicaFisioterapia.Context.Dtos {
+namespace ClinicaFisioterapia.Context.Dtos.Funcionario {
 	public class FuncionarioDTO {
 
 		[Required]

@@ -13,6 +13,7 @@ namespace ClinicaFisioterapia.Context {
 				.HasOne(endereco => endereco.Funcionario)
 				.WithOne(funcionario => funcionario.Endereco)
 				.HasForeignKey<Funcionario>(funcionario => funcionario.EnderecoId);
+				
 
 			modelBuilder.Entity<Endereco>()
 				.HasOne(endereco => endereco.Paciente)

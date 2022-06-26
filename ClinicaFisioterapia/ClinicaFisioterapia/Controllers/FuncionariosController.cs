@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClinicaFisioterapia.Context.Dtos;
+using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
 using Microsoft.AspNetCore.Cors;
@@ -15,36 +16,35 @@ using System.Threading.Tasks;
 namespace ClinicaFisioterapia.Controllers {
 
 	[Route("api/[controller]")]
-	[ApiController]	
+	[ApiController]
 	public class FuncionariosController : ControllerBase {
 
 
 		private IFuncionarioService _funcionarioService;
-		private IMapper _mapper;
 
-		public FuncionariosController(IFuncionarioService funcionarioService, IMapper mapper) { 
+
+		public FuncionariosController(IFuncionarioService funcionarioService) {
 			_funcionarioService = funcionarioService;
-			_mapper = mapper;
 		}
 
-		
+
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status500InternalServerError)]		
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionario() {
 
 			try {
 				var funcionarios = await _funcionarioService.BuscaFuncionario();
 				return Ok(funcionarios);
 			}
-			catch  {
+			catch {
 
 				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Funcionarios");
 			}
 		}
 
 		[HttpGet("BuscaFuncionarioPorNome")]
-		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionarioPorNome([FromQuery]string nome) {
+		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionarioPorNome([FromQuery] string nome) {
 
 			try {
 				var funcionarios = await _funcionarioService.BuscaPorNome(nome);
@@ -59,35 +59,33 @@ namespace ClinicaFisioterapia.Controllers {
 			}
 		}
 
-		
+
 		[HttpGet("{id:int}", Name = "BuscaFuncionarioPorId")]
 		public async Task<ActionResult<Funcionario>> BuscaFuncionarioPorId(int id) {
 
 			try {
 				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
-
+				
 				if (funcionario == null) {
 					return NotFound($"Não existe o funcionário com id {id}");
 				}
 				return Ok(funcionario);
 			}
-			catch  {
+			catch {
 
 				return NotFound("Erro na requisição");
 			}
-			 
+
 		}
 
-		
+
 		[HttpPost]
 		public async Task<ActionResult> AdicionaFuncionario([FromBody] FuncionarioDTO funcionarioDto) {
 
-			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
-
 			try {
-				await _funcionarioService.AdicionaFuncionario(funcionario);
+				ExibiFuncionarioDTO funcionario =  await _funcionarioService.AdicionaFuncionario(funcionarioDto);
 
-				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = funcionario.Id}, funcionario);
+				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = funcionario.Id }, funcionario);
 			}
 			catch {
 
@@ -96,7 +94,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 		}
 
-		
+
 		[HttpPut("{id:int}")]
 		public async Task<ActionResult> AtualizaFuncionario(int id, [FromBody] Funcionario funcionario) {
 
@@ -115,7 +113,7 @@ namespace ClinicaFisioterapia.Controllers {
 			}
 		}
 
-		
+
 		[HttpDelete("{id}")]
 		public async Task<ActionResult> ApagaFuncionario(int id) {
 
@@ -129,9 +127,9 @@ namespace ClinicaFisioterapia.Controllers {
 				else {
 					return NotFound($"Funcionario com id {id} não localizado");
 				}
-				 
+
 			}
-			catch  {
+			catch {
 
 				return BadRequest("Requisição inválida!");
 			}
