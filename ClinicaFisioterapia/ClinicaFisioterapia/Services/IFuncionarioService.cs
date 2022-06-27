@@ -10,13 +10,13 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<IEnumerable<ExibiFuncionarioDTO>> BuscaFuncionario();
 
-		Task<ExibiFuncionarioDTO> BuscaFuncionarioPorId(Int32 id);
+		Task<Funcionario> BuscaFuncionarioPorId(Int32 id);
 
 		Task<ExibiFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto);
 
 		Task AtualizaFuncionario(Funcionario funcionario);
 
-		Task ApagaFuncionario(ExibiFuncionarioDTO funcionario);
+		Task ApagaFuncionario(Funcionario funcionario);
 
 		Task<IEnumerable<ExibiFuncionarioDTO>> BuscaPorNome(String nome);
 	}

@@ -3,6 +3,7 @@ using ClinicaFisioterapia.Context;
 using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,8 +29,8 @@ namespace ClinicaFisioterapia.Services {
 			
 		}
 
-		public async Task ApagaFuncionario(ExibiFuncionarioDTO funcionarioDto) {
-			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
+		public async Task ApagaFuncionario(Funcionario funcionario) {
+			//Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
 			_context.Funcionario.Remove(funcionario);
 			await _context.SaveChangesAsync();
 			
@@ -53,11 +54,11 @@ namespace ClinicaFisioterapia.Services {
 			
 		}
 
-		public async Task<ExibiFuncionarioDTO> BuscaFuncionarioPorId(int id) {
+		public async Task<Funcionario> BuscaFuncionarioPorId(Int32 id) {
 			
 			var funcionario = await _context.Funcionario.FindAsync(id);
-			ExibiFuncionarioDTO funcionarioDTO = _mapper.Map<ExibiFuncionarioDTO>(funcionario);
-			return funcionarioDTO;
+			//ExibiFuncionarioDTO funcionarioDTO = _mapper.Map<ExibiFuncionarioDTO>(funcionario);
+			return funcionario;
 		}
 
 		public async Task<IEnumerable<ExibiFuncionarioDTO>> BuscaPorNome(string nome) {
