@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace ClinicaFisioterapia.Services {
 	public interface IFuncionarioService {
 
-		Task<IEnumerable<Funcionario>> BuscaFuncionario();
+		Task<IEnumerable<ExibiFuncionarioDTO>> BuscaFuncionario();
 
-		Task<Funcionario> BuscaFuncionarioPorId(Int32 id);
+		Task<ExibiFuncionarioDTO> BuscaFuncionarioPorId(Int32 id);
 
 		Task<ExibiFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto);
 
 		Task AtualizaFuncionario(Funcionario funcionario);
 
-		Task ApagaFuncionario(Funcionario funcionario);
+		Task ApagaFuncionario(ExibiFuncionarioDTO funcionario);
 
-		Task<IEnumerable<Funcionario>> BuscaPorNome(String nome);
+		Task<IEnumerable<ExibiFuncionarioDTO>> BuscaPorNome(String nome);
 	}
 }

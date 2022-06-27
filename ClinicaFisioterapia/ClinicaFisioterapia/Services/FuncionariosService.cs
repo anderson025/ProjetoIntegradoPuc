@@ -28,9 +28,11 @@ namespace ClinicaFisioterapia.Services {
 			
 		}
 
-		public async Task ApagaFuncionario(Funcionario funcionario) {
+		public async Task ApagaFuncionario(ExibiFuncionarioDTO funcionarioDto) {
+			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
 			_context.Funcionario.Remove(funcionario);
 			await _context.SaveChangesAsync();
+			
 		}
 
 		public async Task AtualizaFuncionario(Funcionario funcionario) {
@@ -38,9 +40,11 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<Funcionario>> BuscaFuncionario() {
+		public async Task<IEnumerable<ExibiFuncionarioDTO>> BuscaFuncionario() {
+			
 			try {
-				return await _context.Funcionario.ToListAsync();
+				IEnumerable<Funcionario> funcionario = await _context.Funcionario.ToListAsync();
+				return _mapper.Map<IEnumerable<ExibiFuncionarioDTO>>(funcionario);
 			}
 			catch  {
 
@@ -49,24 +53,29 @@ namespace ClinicaFisioterapia.Services {
 			
 		}
 
-		public async Task<Funcionario> BuscaFuncionarioPorId(int id) {
+		public async Task<ExibiFuncionarioDTO> BuscaFuncionarioPorId(int id) {
 			
 			var funcionario = await _context.Funcionario.FindAsync(id);
 			ExibiFuncionarioDTO funcionarioDTO = _mapper.Map<ExibiFuncionarioDTO>(funcionario);
-			return funcionario;
+			return funcionarioDTO;
 		}
 
-		public async Task<IEnumerable<Funcionario>> BuscaPorNome(string nome) {
-			IEnumerable<Funcionario> funcionarios;
+		public async Task<IEnumerable<ExibiFuncionarioDTO>> BuscaPorNome(string nome) {
 
+			IEnumerable<Funcionario> funcionarios;
+			IEnumerable<ExibiFuncionarioDTO> funcionarioDTOs;
 			if (!string.IsNullOrWhiteSpace(nome)) {
+
 				funcionarios = await _context.Funcionario.Where(n => n.Nome.Contains(nome)).ToListAsync();
+				return _mapper.Map<IEnumerable<ExibiFuncionarioDTO>>(funcionarios);
+				
 			}
 			else {
-				funcionarios = await BuscaFuncionario();
+				funcionarioDTOs = await BuscaFuncionario();
+				return funcionarioDTOs;
 			}
 
-			return funcionarios;
+			
 		}
 
 		

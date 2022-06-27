@@ -28,62 +28,11 @@ namespace ClinicaFisioterapia.Controllers {
 		}
 
 
-		[HttpGet]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionario() {
-
-			try {
-				var funcionarios = await _funcionarioService.BuscaFuncionario();
-				return Ok(funcionarios);
-			}
-			catch {
-
-				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Funcionarios");
-			}
-		}
-
-		[HttpGet("BuscaFuncionarioPorNome")]
-		public async Task<ActionResult<IAsyncEnumerable<Funcionario>>> BuscaFuncionarioPorNome([FromQuery] string nome) {
-
-			try {
-				var funcionarios = await _funcionarioService.BuscaPorNome(nome);
-				if (funcionarios.Count() == 0) {
-					return NotFound($"Não existe o funcionário {nome}");
-				}
-				return Ok(funcionarios);
-			}
-			catch {
-
-				return BadRequest("Requisição inválida");
-			}
-		}
-
-
-		[HttpGet("{id:int}", Name = "BuscaFuncionarioPorId")]
-		public async Task<ActionResult<Funcionario>> BuscaFuncionarioPorId(int id) {
-
-			try {
-				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
-				
-				if (funcionario == null) {
-					return NotFound($"Não existe o funcionário com id {id}");
-				}
-				return Ok(funcionario);
-			}
-			catch {
-
-				return NotFound("Erro na requisição");
-			}
-
-		}
-
-
 		[HttpPost]
 		public async Task<ActionResult> AdicionaFuncionario([FromBody] FuncionarioDTO funcionarioDto) {
 
 			try {
-				ExibiFuncionarioDTO funcionario =  await _funcionarioService.AdicionaFuncionario(funcionarioDto);
+				ExibiFuncionarioDTO funcionario = await _funcionarioService.AdicionaFuncionario(funcionarioDto);
 
 				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = funcionario.Id }, funcionario);
 			}
@@ -93,26 +42,6 @@ namespace ClinicaFisioterapia.Controllers {
 			}
 
 		}
-
-
-		[HttpPut("{id:int}")]
-		public async Task<ActionResult> AtualizaFuncionario(int id, [FromBody] Funcionario funcionario) {
-
-			try {
-				if (funcionario.Id == id) {
-					await _funcionarioService.AtualizaFuncionario(funcionario);
-					return Ok($"Funcionario com id= {id} foi atualizado com sucesso");
-				}
-				else {
-					return BadRequest("Erro na atualização");
-				}
-			}
-			catch {
-
-				return BadRequest("Erro na requisição");
-			}
-		}
-
 
 		[HttpDelete("{id}")]
 		public async Task<ActionResult> ApagaFuncionario(int id) {
@@ -134,5 +63,73 @@ namespace ClinicaFisioterapia.Controllers {
 				return BadRequest("Requisição inválida!");
 			}
 		}
+
+		[HttpPut("{id:int}")]
+		public async Task<ActionResult> AtualizaFuncionario(int id, [FromBody] Funcionario funcionario) {
+
+			try {
+				if (funcionario.Id == id) {
+					await _funcionarioService.AtualizaFuncionario(funcionario);
+					return Ok($"Funcionario com id= {id} foi atualizado com sucesso");
+				}
+				else {
+					return BadRequest("Erro na atualização");
+				}
+			}
+			catch {
+
+				return BadRequest("Erro na requisição");
+			}
+		}
+
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IAsyncEnumerable<ExibiFuncionarioDTO>>> BuscaFuncionario() {
+
+			try {
+				var funcionarios = await _funcionarioService.BuscaFuncionario();
+				return Ok(funcionarios);
+			}
+			catch {
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Funcionarios");
+			}
+		}
+
+		[HttpGet("{id:int}", Name = "BuscaFuncionarioPorId")]
+		public async Task<ActionResult<Funcionario>> BuscaFuncionarioPorId(int id) {
+
+			try {
+				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
+
+				if (funcionario == null) {
+					return NotFound($"Não existe o funcionário com id {id}");
+				}
+				return Ok(funcionario);
+			}
+			catch {
+
+				return NotFound("Erro na requisição");
+			}
+
+		}
+
+		[HttpGet("BuscaFuncionarioPorNome")]
+		public async Task<ActionResult<IAsyncEnumerable<ExibiFuncionarioDTO>>> BuscaFuncionarioPorNome([FromQuery] string nome) {
+
+			try {
+				var funcionarios = await _funcionarioService.BuscaPorNome(nome);
+				if (funcionarios.Count() == 0) {
+					return NotFound($"Não existe o funcionário {nome}");
+				}
+				return Ok(funcionarios);
+			}
+			catch {
+
+				return BadRequest("Requisição inválida");
+			}
+		}
+
 	}
 }
