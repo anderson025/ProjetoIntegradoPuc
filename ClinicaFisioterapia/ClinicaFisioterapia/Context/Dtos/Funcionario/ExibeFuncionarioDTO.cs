@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace ClinicaFisioterapia.Context.Dtos.Funcionario {
-	public class ExibiFuncionarioDTO {
+	public class ExibeFuncionarioDTO {
 
 		[Key]
 		public Int32 Id { get; set; }

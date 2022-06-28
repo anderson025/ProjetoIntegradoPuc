@@ -32,7 +32,7 @@ namespace ClinicaFisioterapia.Controllers {
 		public async Task<ActionResult> AdicionaFuncionario([FromBody] FuncionarioDTO funcionarioDto) {
 
 			try {
-				ExibiFuncionarioDTO funcionario = await _funcionarioService.AdicionaFuncionario(funcionarioDto);
+				ExibeFuncionarioDTO funcionario = await _funcionarioService.AdicionaFuncionario(funcionarioDto);
 
 				return CreatedAtRoute(nameof(BuscaFuncionarioPorId), new { id = funcionario.Id }, funcionario);
 			}
@@ -44,18 +44,17 @@ namespace ClinicaFisioterapia.Controllers {
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<ActionResult> ApagaFuncionario(int id) {
+		public async Task<ActionResult> ApagaFuncionario(Int32 id) {
 
 			try {
-				var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
-
-				if (funcionario != null) {
-					await _funcionarioService.ApagaFuncionario(funcionario);
-					return Ok($"Funcionario de id {id} foi excluido com sucesso!");
-				}
-				else {
-					return NotFound($"Funcionario com id {id} não localizado");
-				}
+				//var funcionario = await _funcionarioService.BuscaFuncionarioPorId(id);
+				await _funcionarioService.ApagaFuncionario(id);
+				return Ok($"Funcionario de id {id} foi excluido com sucesso!");
+				//if (funcionario != null) {
+				//}
+				//else {
+				//	return NotFound($"Funcionario com id {id} não localizado");
+				//}
 
 			}
 			catch {
@@ -85,7 +84,7 @@ namespace ClinicaFisioterapia.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IAsyncEnumerable<ExibiFuncionarioDTO>>> BuscaFuncionario() {
+		public async Task<ActionResult<IAsyncEnumerable<ExibeFuncionarioDTO>>> BuscaFuncionario() {
 
 			try {
 				var funcionarios = await _funcionarioService.BuscaFuncionario();
@@ -116,7 +115,7 @@ namespace ClinicaFisioterapia.Controllers {
 		}
 
 		[HttpGet("BuscaFuncionarioPorNome")]
-		public async Task<ActionResult<IAsyncEnumerable<ExibiFuncionarioDTO>>> BuscaFuncionarioPorNome([FromQuery] string nome) {
+		public async Task<ActionResult<IAsyncEnumerable<ExibeFuncionarioDTO>>> BuscaFuncionarioPorNome([FromQuery] string nome) {
 
 			try {
 				var funcionarios = await _funcionarioService.BuscaPorNome(nome);

@@ -9,15 +9,15 @@ namespace ClinicaFisioterapia.Profiles {
 		public FuncionarioProfile() {
 
 			CreateMap<FuncionarioDTO, Funcionario>();
-			CreateMap<Funcionario, ExibiFuncionarioDTO>();
-			CreateMap<ExibiFuncionarioDTO, Funcionario>();
-			CreateMap<ExibiFuncionarioDTO, FuncionarioDTO>();
-			CreateMap<FuncionarioDTO, ExibiFuncionarioDTO>();
+			CreateMap<Funcionario, ExibeFuncionarioDTO>();
+			CreateMap<ExibeFuncionarioDTO, Funcionario>();
+			CreateMap<ExibeFuncionarioDTO, FuncionarioDTO>();
+			CreateMap<FuncionarioDTO, ExibeFuncionarioDTO>();
 
 			CreateMap<EnderecoDTO, Endereco>();
 			CreateMap<Endereco, EnderecoDTO>();
-			CreateMap<Endereco, ExibiFuncionarioDTO>();
-			CreateMap<ExibiFuncionarioDTO, Endereco>();
+			CreateMap<Endereco, ExibeFuncionarioDTO>();
+			CreateMap<ExibeFuncionarioDTO, Endereco>();
 
 		}
 	}

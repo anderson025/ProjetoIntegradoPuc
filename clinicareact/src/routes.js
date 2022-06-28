@@ -12,14 +12,13 @@ export default function MainRoutes() {
 
     return(
         <Routes>
-            <Route path="/api/Funcionarios" element={ <Funcionario/>} />
+            <Route path="/funcionarios" element={ <Funcionario/>} />
             <Route path="/" element={ <Home />} />
-            <Route path="/api/Pacientes" element={ <Paciente />} />
-            <Route path="/api/Agenda" element={<Agenda />} />
-            <Route path="/api/Avaliacao" element={<Avaliacao />} />
-            <Route path="/api/Evolucao" element={<Evolucao />} />
-            <Route path="/api/Sessao" element={<Sessao />} />
+            <Route path="/pacientes" element={ <Paciente />} />
+            <Route path="/agenda" element={<Agenda />} />
+            <Route path="/avaliacao" element={<Avaliacao />} />
+            <Route path="/evolucao" element={<Evolucao />} />
+            <Route path="/sessao" element={<Sessao />} />
         </Routes>
     );
-
 }

@@ -20,17 +20,18 @@ namespace ClinicaFisioterapia.Services {
 		}
 				
 
-		public async Task<ExibiFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto) {
+		public async Task<ExibeFuncionarioDTO> AdicionaFuncionario(FuncionarioDTO funcionarioDto) {
 
 			Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
 			_context.Funcionario.Add(funcionario);
 			await _context.SaveChangesAsync();
-			return _mapper.Map<ExibiFuncionarioDTO>(funcionario);
+			return _mapper.Map<ExibeFuncionarioDTO>(funcionario);
 			
 		}
 
-		public async Task ApagaFuncionario(Funcionario funcionario) {
-			//Funcionario funcionario = _mapper.Map<Funcionario>(funcionarioDto);
+		public async Task ApagaFuncionario(Int32 id) {
+
+			Funcionario funcionario = await _context.Funcionario.FindAsync(id);
 			_context.Funcionario.Remove(funcionario);
 			await _context.SaveChangesAsync();
 			
@@ -41,11 +42,11 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<ExibiFuncionarioDTO>> BuscaFuncionario() {
+		public async Task<IEnumerable<ExibeFuncionarioDTO>> BuscaFuncionario() {
 			
 			try {
 				IEnumerable<Funcionario> funcionario = await _context.Funcionario.ToListAsync();
-				return _mapper.Map<IEnumerable<ExibiFuncionarioDTO>>(funcionario);
+				return _mapper.Map<IEnumerable<ExibeFuncionarioDTO>>(funcionario);
 			}
 			catch  {
 
@@ -61,14 +62,14 @@ namespace ClinicaFisioterapia.Services {
 			return funcionario;
 		}
 
-		public async Task<IEnumerable<ExibiFuncionarioDTO>> BuscaPorNome(string nome) {
+		public async Task<IEnumerable<ExibeFuncionarioDTO>> BuscaPorNome(string nome) {
 
 			IEnumerable<Funcionario> funcionarios;
-			IEnumerable<ExibiFuncionarioDTO> funcionarioDTOs;
+			IEnumerable<ExibeFuncionarioDTO> funcionarioDTOs;
 			if (!string.IsNullOrWhiteSpace(nome)) {
 
 				funcionarios = await _context.Funcionario.Where(n => n.Nome.Contains(nome)).ToListAsync();
-				return _mapper.Map<IEnumerable<ExibiFuncionarioDTO>>(funcionarios);
+				return _mapper.Map<IEnumerable<ExibeFuncionarioDTO>>(funcionarios);
 				
 			}
 			else {

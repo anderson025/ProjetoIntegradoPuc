@@ -5,11 +5,12 @@ import {Container, Modal, ModalBody, ModalFooter, ModalHeader, Navbar} from 'rea
 import './App.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Header from './components/Header.js';
+import Header from './components/MenuAppBar.js';
 import { Footer } from './components/Footer';
 import { FuncionarioService } from './api/FuncionarioService';
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";
+import MenuAppBar from './components/MenuAppBar.js';
 
 function App() {  
 
@@ -17,8 +18,10 @@ function App() {
     <Router>
       <div className="App">  
       
-        <Header />     
-        <Routes />
+        <MenuAppBar>
+          <Routes />
+        </MenuAppBar>     
+        
       </div>
     </Router>
   );
