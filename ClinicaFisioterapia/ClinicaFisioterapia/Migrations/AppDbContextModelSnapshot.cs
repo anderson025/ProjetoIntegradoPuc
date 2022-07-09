@@ -17,6 +17,32 @@ namespace ClinicaFisioterapia.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.17");
 
+            modelBuilder.Entity("ClinicaFisioterapia.Models.Agendamento", b =>
+                {
+                    b.Property<int>("IdAgendamento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataAgendamento")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("IdFuncionario")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdAgendamento");
+
+                    b.HasIndex("IdFuncionario")
+                        .IsUnique();
+
+                    b.HasIndex("IdPaciente")
+                        .IsUnique();
+
+                    b.ToTable("Agendamento");
+                });
+
             modelBuilder.Entity("ClinicaFisioterapia.Models.Endereco", b =>
                 {
                     b.Property<int>("Id")
@@ -180,6 +206,25 @@ namespace ClinicaFisioterapia.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("ClinicaFisioterapia.Models.Agendamento", b =>
+                {
+                    b.HasOne("ClinicaFisioterapia.Models.Funcionario", "Funcionario")
+                        .WithOne("Agendamento")
+                        .HasForeignKey("ClinicaFisioterapia.Models.Agendamento", "IdFuncionario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicaFisioterapia.Models.Paciente", "Paciente")
+                        .WithOne("Agendamento")
+                        .HasForeignKey("ClinicaFisioterapia.Models.Agendamento", "IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Funcionario");
+
+                    b.Navigation("Paciente");
+                });
+
             modelBuilder.Entity("ClinicaFisioterapia.Models.Funcionario", b =>
                 {
                     b.HasOne("ClinicaFisioterapia.Models.Endereco", "Endereco")
@@ -207,6 +252,16 @@ namespace ClinicaFisioterapia.Migrations
                     b.Navigation("Funcionario");
 
                     b.Navigation("Paciente");
+                });
+
+            modelBuilder.Entity("ClinicaFisioterapia.Models.Funcionario", b =>
+                {
+                    b.Navigation("Agendamento");
+                });
+
+            modelBuilder.Entity("ClinicaFisioterapia.Models.Paciente", b =>
+                {
+                    b.Navigation("Agendamento");
                 });
 #pragma warning restore 612, 618
         }

@@ -25,8 +25,7 @@ namespace ClinicaFisioterapia.Context.Dtos.Paciente {
 		public String Convenio { get; set; }
 		public Int32 CarteiraConvenio { get; set; }
 		[Required]
-		public virtual EnderecoDTO Endereco { get; set; }
-		public Int32 EnderecoId { get; set; }
+		public virtual EnderecoDTO Endereco { get; set; }		
 
 		[Required]
 		[EmailAddress]

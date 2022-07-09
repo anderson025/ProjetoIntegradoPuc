@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ClinicaFisioterapia.Models {
 	public class Pessoa {
@@ -31,6 +32,9 @@ namespace ClinicaFisioterapia.Models {
 		[Required]
 		[EmailAddress]
 		public String Email { get; set; }
+
+		[JsonIgnore]
+		public virtual Agendamento Agendamento { get; set; }
 
 	}
 

@@ -35,6 +35,7 @@ namespace ClinicaFisioterapia {
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddScoped<IFuncionarioService, FuncionariosService>();
 			services.AddScoped<IPacienteService, PacienteService>();
+			services.AddScoped<IAgendamentoService, AgendamentoService>();
 
 			services.AddCors();
 			
