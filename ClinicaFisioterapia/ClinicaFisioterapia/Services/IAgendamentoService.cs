@@ -17,8 +17,10 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<IEnumerable<Agendamento>> BuscaPorNomePaciente(String nomePaciente);
 
-		Task<IEnumerable<Funcionario>> BuscaPorNomeFuncionario(String nomePaciente);
+		Task<IEnumerable<Agendamento>> BuscaPorNomeFuncionario(String nomePaciente);
 
-		Task<String> BuscaPorData(String data);
+		Task<IEnumerable<Agendamento>> BuscaPorData(String data);
+
+		Task<IEnumerable<ExibeAgendamentoDTO>> BuscaTodosAgendamentos();
 	}
 }

@@ -1,8 +1,10 @@
 ﻿using ClinicaFisioterapia.Context.Dtos.Agendamento;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Controllers {
@@ -51,6 +53,36 @@ namespace ClinicaFisioterapia.Controllers {
 			catch {
 
 				return NotFound("Erro na requisição");
+			}
+		}
+
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IAsyncEnumerable<ExibeAgendamentoDTO>>> BuscaTodosAgendamentos() {
+
+			try {
+				var agendamento = await _agendamentoService.BuscaTodosAgendamentos();
+				return Ok(agendamento);
+			}
+			catch {
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Agendamento");
+			}
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<ActionResult> ApagaAgendamento(Int32 id) {
+
+			try {
+				
+				await _agendamentoService.ApagaAgendamento(id);
+				return Ok($"Agendamento de id {id} foi excluido com sucesso!");			
+
+			}
+			catch {
+
+				return BadRequest("Requisição inválida!");
 			}
 		}
 	}

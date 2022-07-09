@@ -51,12 +51,30 @@ namespace ClinicaFisioterapia.Services {
 			return false;
 		}
 
-		public Task ApagaAgendamento(int id) {
-			throw new System.NotImplementedException();
+		public async Task<IEnumerable<ExibeAgendamentoDTO>> BuscaTodosAgendamentos() {
+
+			try {
+				var agendamento = await _context.Agendamento.ToListAsync();
+				return _mapper.Map<IEnumerable<ExibeAgendamentoDTO>>(agendamento);
+			}
+			catch {
+
+				throw;
+			}
+
 		}
 
-		public Task AtualizaAgendamento(Agendamento agendamento) {
-			throw new System.NotImplementedException();
+		public async Task ApagaAgendamento(Int32 id) {
+
+			Agendamento agendamento = await _context.Agendamento.FindAsync(id);
+			_context.Agendamento.Remove(agendamento);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task AtualizaAgendamento(Agendamento agendamento) {
+
+			_context.Entry(agendamento).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
 		}
 
 		public async Task<ExibeAgendamentoDTO> BuscaAgendamentoPorId(int id) {
@@ -65,12 +83,38 @@ namespace ClinicaFisioterapia.Services {
 			return _mapper.Map<ExibeAgendamentoDTO>(agendamento); ;
 		}
 
-		public Task<string> BuscaPorData(string data) {
-			throw new System.NotImplementedException();
+		public async Task<IEnumerable<Agendamento>> BuscaPorData(String date) {
+
+			IEnumerable<Agendamento> agendamentos;
+
+			if (!string.IsNullOrWhiteSpace(date)) {
+
+				agendamentos = await _context.Agendamento.Where(n => n.DataAgendamento.Date == DateTime.Parse(date).Date).ToListAsync();
+
+				if (agendamentos.Count() > 0) {
+					return agendamentos;
+				}
+
+			}
+
+			return null;
 		}
 
-		public Task<IEnumerable<Funcionario>> BuscaPorNomeFuncionario(string nomePaciente) {
-			throw new System.NotImplementedException();
+		public async Task<IEnumerable<Agendamento>> BuscaPorNomeFuncionario(String nomePaciente) {
+
+			IEnumerable<Agendamento> agendamentos;
+			IEnumerable<ExibeAgendamentoDTO> agendamentoDTOs;
+			if (!string.IsNullOrWhiteSpace(nomePaciente)) {
+
+				agendamentos = await _context.Agendamento.Where(n => n.Funcionario.Nome.Contains(nomePaciente)).ToListAsync();
+				return agendamentos;
+
+			}
+			else {
+				agendamentoDTOs = await BuscaTodosAgendamentos();
+				return _mapper.Map<IEnumerable<Agendamento>>(agendamentoDTOs);
+			}
+			
 		}
 
 		public async Task<IEnumerable<Agendamento>> BuscaPorNomePaciente(string nomePaciente) {
