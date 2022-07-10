@@ -13,7 +13,7 @@ namespace ClinicaFisioterapia.Controllers {
 	[ApiController]
 	public class AgendamentoController : Controller {
 
-		public IAgendamentoService _agendamentoService { get; set; }
+		public IAgendamentoService _agendamentoService;
 
 		public AgendamentoController(IAgendamentoService agendamentoService) {
 			_agendamentoService = agendamentoService;

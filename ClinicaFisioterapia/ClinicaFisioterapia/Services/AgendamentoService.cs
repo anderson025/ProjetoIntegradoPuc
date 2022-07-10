@@ -77,10 +77,10 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<ExibeAgendamentoDTO> BuscaAgendamentoPorId(int id) {
+		public async Task<ExibeAgendamentoDTO> BuscaAgendamentoPorId(Int32 id) {
 
 			var agendamento = await _context.Agendamento.FindAsync(id);			
-			return _mapper.Map<ExibeAgendamentoDTO>(agendamento); ;
+			return _mapper.Map<ExibeAgendamentoDTO>(agendamento);
 		}
 
 		public async Task<IEnumerable<Agendamento>> BuscaPorData(String date) {

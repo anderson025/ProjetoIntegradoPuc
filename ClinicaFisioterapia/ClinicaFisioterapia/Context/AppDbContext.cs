@@ -29,12 +29,28 @@ namespace ClinicaFisioterapia.Context {
 				.HasOne(agendamento => agendamento.Funcionario)
 				.WithOne(funcionario => funcionario.Agendamento)
 				.HasForeignKey<Agendamento>(funcionario => funcionario.IdFuncionario);
+
+			modelBuilder.Entity<Avaliacao>()
+				.HasOne(avaliacao => avaliacao.Funcionario)
+				.WithMany(funcionario => funcionario.Avaliacoes)
+				.HasForeignKey(avaliacao => avaliacao.IdFuncionario);
+
+			modelBuilder.Entity<Avaliacao>()
+				.HasOne(avaliacao => avaliacao.Medico)
+				.WithMany(medico => medico.Avaliacoes)
+				.HasForeignKey(avaliacao => avaliacao.IdMedico);
+
+			modelBuilder.Entity<Paciente>()
+				.HasOne(paciente => paciente.Avaliacao)
+				.WithOne(avaliacao => avaliacao.Paciente)
+				.HasForeignKey<Avaliacao>(avaliacao => avaliacao.IdPaciente);
 		}
 
 		public DbSet<Funcionario> Funcionario { get; set; }
 		public DbSet<Paciente> Pacientes { get; set; }
 		public DbSet<Agendamento> Agendamento { get; set; }
 		public DbSet<Avaliacao> Avaliacao { get; set; }
+		public DbSet<Medico> Medico { get; set; }
 		
 	}
 }

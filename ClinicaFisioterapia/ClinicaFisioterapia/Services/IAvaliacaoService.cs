@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace ClinicaFisioterapia.Services {
 	public interface IAvaliacaoService {
 
-		Task<Avaliacao> AdicionaAgendamento(AvaliacaoDTO avaliacaoDto);
+		Task<Avaliacao> BuscaAvaliacaoPorId(Int32 id);
+
+		Task<Avaliacao> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto);
 
 		Task ApagaAvaliacao(Int32 id);
 

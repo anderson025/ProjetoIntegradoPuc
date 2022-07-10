@@ -1,12 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClinicaFisioterapia.Models {
 	public class Avaliacao {
 
-		public int Id { get; set; }
-		public Funcionario Funcionario { get; set; }
-		public Paciente Paciente { get; set; }
-		public Medico Medico { get; set; }
+		[Key]
+		public Int32 Id { get; set; }
+		public virtual Funcionario Funcionario { get; set; }
+		[Required]
+		public Int32 IdFuncionario { get; set; }
+
+		public virtual Paciente Paciente { get; set; }
+		public Int32 IdPaciente { get; set; }
+
+		public  virtual Medico Medico { get; set; }
+		public Int32 IdMedico { get; set; }
+
 		public Double Peso { get; set; }
 		public Double Altura { get; set; }
 		public string Diagnostico { get; set; }
