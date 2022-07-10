@@ -21,11 +21,11 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		[HttpPost]
-		public async Task<ActionResult> AdicionaFuncionario([FromBody] AgendamentoDTO agendamentoDto) {
+		public async Task<ActionResult> AdicionaAgendamento([FromBody] AgendamentoDTO agendamentoDto) {
 
 			try {
 
-				
+
 				Agendamento agendamento = await _agendamentoService.AdicionaAgendamento(agendamentoDto);
 				if (agendamento == null) {
 					return BadRequest("Data não disponível");
@@ -41,7 +41,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 		[HttpGet("{id:int}", Name = "BuscaAgendamentoPorId")]
 		public async Task<ActionResult<AgendamentoDTO>> BuscaAgendamentoPorId(int id) {
-			
+
 			try {
 				var agendamento = await _agendamentoService.BuscaAgendamentoPorId(id);
 
@@ -75,14 +75,50 @@ namespace ClinicaFisioterapia.Controllers {
 		public async Task<ActionResult> ApagaAgendamento(Int32 id) {
 
 			try {
-				
+
 				await _agendamentoService.ApagaAgendamento(id);
-				return Ok($"Agendamento de id {id} foi excluido com sucesso!");			
+				return Ok($"Agendamento de id {id} foi excluido com sucesso!");
 
 			}
 			catch {
 
 				return BadRequest("Requisição inválida!");
+			}
+		}
+
+		[HttpPut("{id:int}")]
+		public async Task<ActionResult> AtualizaAgendamento(int id, [FromBody] Agendamento agendamento) {
+
+			try {
+				if (agendamento.IdAgendamento == id) {
+					await _agendamentoService.AtualizaAgendamento(agendamento);
+					return Ok($"Agendamento com id= {id} foi atualizado com sucesso");
+				}
+				else {
+					return BadRequest("Erro na atualização");
+				}
+			}
+			catch {
+
+				return BadRequest("Erro na requisição");
+			}
+		}		
+		
+
+		[HttpGet("BuscaAgendamentoPorData")]
+		public async Task<ActionResult<IAsyncEnumerable<AgendamentoDTO>>> BuscaAgendamentoPorData([FromQuery] string data) {
+
+			try {
+				var agendamento = await _agendamentoService.BuscaPorData(data);
+
+				if (agendamento == null) {
+					return NotFound($"Não existe o agendamento para a data {data}");
+				}
+				return Ok(agendamento);
+			}
+			catch {
+
+				return NotFound("Erro na requisição");
 			}
 		}
 	}
