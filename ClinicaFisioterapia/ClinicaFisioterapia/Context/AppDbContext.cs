@@ -34,6 +34,7 @@ namespace ClinicaFisioterapia.Context {
 		public DbSet<Funcionario> Funcionario { get; set; }
 		public DbSet<Paciente> Pacientes { get; set; }
 		public DbSet<Agendamento> Agendamento { get; set; }
+		public DbSet<Avaliacao> Avaliacao { get; set; }
 		
 	}
 }

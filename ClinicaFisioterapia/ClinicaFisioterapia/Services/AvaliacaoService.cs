@@ -1,22 +1,45 @@
-﻿using ClinicaFisioterapia.Context.Dtos.Agendamento;
+﻿using AutoMapper;
+using ClinicaFisioterapia.Context;
+using ClinicaFisioterapia.Context.Dtos.Agendamento;
 using ClinicaFisioterapia.Context.Dtos.Avaliacao;
 using ClinicaFisioterapia.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Services {
 	public class AvaliacaoService : IAvaliacaoService {
 
-		public Task<Avaliacao> AdicionaAgendamento(AvaliacaoDTO avaliacaoDto) {
-			throw new System.NotImplementedException();
+		private readonly AppDbContext _context;
+		private IMapper _mapper;
+
+		public AvaliacaoService(AppDbContext context, IMapper mapper) {
+			_context = context;
+			_mapper = mapper;
 		}
 
-		public Task ApagaAvaliacao(int id) {
-			throw new System.NotImplementedException();
+		public async Task<Avaliacao> AdicionaAgendamento(AvaliacaoDTO avaliacaoDto) {			
+
+
+			Avaliacao avaliacao = _mapper.Map<Avaliacao>(avaliacaoDto);
+			_context.Avaliacao.Add(avaliacao);
+			await _context.SaveChangesAsync();
+			return avaliacao;
+
 		}
 
-		public Task AtualizaAvaliacao(Avaliacao avaliacao) {
-			throw new System.NotImplementedException();
+		public async Task ApagaAvaliacao(Int32 id) {
+
+			Avaliacao avaliacao = await _context.Avaliacao.FindAsync(id);
+			_context.Avaliacao.Remove(avaliacao);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task AtualizaAvaliacao(Avaliacao avaliacao) {
+
+			_context.Entry(avaliacao).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
 		}
 
 		public Task<IEnumerable<Avaliacao>> BuscaPorData(string data) {
