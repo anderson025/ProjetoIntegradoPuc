@@ -5,5 +5,6 @@ namespace ClinicaFisioterapia.Models {
 
 		[JsonIgnore]
 		public virtual Avaliacao Avaliacao { get; set; }
+		
 	}
 }

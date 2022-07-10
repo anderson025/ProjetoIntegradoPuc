@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClinicaFisioterapia.Models {
@@ -42,6 +43,8 @@ namespace ClinicaFisioterapia.Models {
 		public String CondutaCurtoPrazo { get; set; }
 		public String CondutaMedioPrazo { get; set; }
 		public String CondutaLongoPrazo { get; set; }
+
+		public virtual List<Sessao> Sessoes { get; set; }
 
 
 	}

@@ -38,6 +38,8 @@ namespace ClinicaFisioterapia {
 			services.AddScoped<IAgendamentoService, AgendamentoService>();
 			services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 			services.AddScoped<IMedicoService, MedicoService>();
+			services.AddScoped<ISessaoService, SessaoService>();
+
 
 			services.AddCors();
 			

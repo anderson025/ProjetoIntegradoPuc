@@ -36,6 +36,9 @@ namespace ClinicaFisioterapia.Models {
 		[JsonIgnore]
 		public virtual Agendamento Agendamento { get; set; }
 
+		[JsonIgnore]
+		public virtual Sessao Sessao { get; set; }
+
 	}
 
 	public enum Sexo {
