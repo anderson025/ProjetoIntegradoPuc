@@ -21,6 +21,8 @@ namespace ClinicaFisioterapia.Controllers {
 		public async Task<ActionResult> AdicionaAvaliacao([FromBody] AvaliacaoDTO avaliacaoDto) {
 
 			try {
+				//Implementar consulta de avaliacao
+				//se existir, chamar o metodo de atualizar
 
 				var avaliacao = await _avaliacaoService.AdicionaAvaliacao(avaliacaoDto);
 				//if (avaliacao == null) {

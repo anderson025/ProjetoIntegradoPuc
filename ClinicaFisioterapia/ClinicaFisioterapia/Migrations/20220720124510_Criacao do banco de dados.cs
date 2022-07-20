@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace ClinicaFisioterapia.Migrations
 {
-    public partial class Criandobancodozero : Migration
+    public partial class Criacaodobancodedados : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,44 +42,6 @@ namespace ClinicaFisioterapia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessao",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    IdAvaliacao = table.Column<int>(type: "int", nullable: false),
-                    DataSessao = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IdFuncionario = table.Column<int>(type: "int", nullable: false),
-                    IdPaciente = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sessao", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Evolucao",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    IdSessao = table.Column<int>(type: "int", nullable: false),
-                    Observacao = table.Column<string>(type: "text", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    DataEvolucao = table.Column<DateTime>(type: "datetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Evolucao", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Evolucao_Sessao_IdSessao",
-                        column: x => x.IdSessao,
-                        principalTable: "Sessao",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Funcionario",
                 columns: table => new
                 {
@@ -87,7 +49,6 @@ namespace ClinicaFisioterapia.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Usuario = table.Column<string>(type: "text", nullable: false),
                     Senha = table.Column<string>(type: "text", nullable: false),
-                    EvolucaoId = table.Column<int>(type: "int", nullable: true),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime", nullable: false),
                     Idade = table.Column<int>(type: "int", nullable: false),
@@ -112,12 +73,6 @@ namespace ClinicaFisioterapia.Migrations
                         principalTable: "Endereco",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Funcionario_Evolucao_EvolucaoId",
-                        column: x => x.EvolucaoId,
-                        principalTable: "Evolucao",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +81,6 @@ namespace ClinicaFisioterapia.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    EvolucaoId = table.Column<int>(type: "int", nullable: true),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime", nullable: false),
                     Idade = table.Column<int>(type: "int", nullable: false),
@@ -151,12 +105,6 @@ namespace ClinicaFisioterapia.Migrations
                         principalTable: "Endereco",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Pacientes_Evolucao_EvolucaoId",
-                        column: x => x.EvolucaoId,
-                        principalTable: "Evolucao",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,6 +193,62 @@ namespace ClinicaFisioterapia.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Sessao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    IdAvaliacao = table.Column<int>(type: "int", nullable: false),
+                    DataSessao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IdFuncionario = table.Column<int>(type: "int", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sessao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sessao_Avaliacao_IdAvaliacao",
+                        column: x => x.IdAvaliacao,
+                        principalTable: "Avaliacao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Sessao_Funcionario_IdFuncionario",
+                        column: x => x.IdFuncionario,
+                        principalTable: "Funcionario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Sessao_Pacientes_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "Pacientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Evolucao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    IdSessao = table.Column<int>(type: "int", nullable: false),
+                    Observacao = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DataEvolucao = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Evolucao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Evolucao_Sessao_IdSessao",
+                        column: x => x.IdSessao,
+                        principalTable: "Sessao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Agendamento_IdFuncionario",
                 table: "Agendamento",
@@ -286,20 +290,10 @@ namespace ClinicaFisioterapia.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionario_EvolucaoId",
-                table: "Funcionario",
-                column: "EvolucaoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pacientes_EnderecoId",
                 table: "Pacientes",
                 column: "EnderecoId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pacientes_EvolucaoId",
-                table: "Pacientes",
-                column: "EvolucaoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessao_IdAvaliacao",
@@ -315,61 +309,12 @@ namespace ClinicaFisioterapia.Migrations
                 name: "IX_Sessao_IdPaciente",
                 table: "Sessao",
                 column: "IdPaciente");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sessao_Avaliacao_IdAvaliacao",
-                table: "Sessao",
-                column: "IdAvaliacao",
-                principalTable: "Avaliacao",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sessao_Funcionario_IdFuncionario",
-                table: "Sessao",
-                column: "IdFuncionario",
-                principalTable: "Funcionario",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sessao_Pacientes_IdPaciente",
-                table: "Sessao",
-                column: "IdPaciente",
-                principalTable: "Pacientes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Avaliacao_Funcionario_IdFuncionario",
-                table: "Avaliacao");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Sessao_Funcionario_IdFuncionario",
-                table: "Sessao");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Avaliacao_Pacientes_IdPaciente",
-                table: "Avaliacao");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Sessao_Pacientes_IdPaciente",
-                table: "Sessao");
-
             migrationBuilder.DropTable(
                 name: "Agendamento");
-
-            migrationBuilder.DropTable(
-                name: "Funcionario");
-
-            migrationBuilder.DropTable(
-                name: "Pacientes");
-
-            migrationBuilder.DropTable(
-                name: "Endereco");
 
             migrationBuilder.DropTable(
                 name: "Evolucao");
@@ -381,7 +326,16 @@ namespace ClinicaFisioterapia.Migrations
                 name: "Avaliacao");
 
             migrationBuilder.DropTable(
+                name: "Funcionario");
+
+            migrationBuilder.DropTable(
                 name: "Medico");
+
+            migrationBuilder.DropTable(
+                name: "Pacientes");
+
+            migrationBuilder.DropTable(
+                name: "Endereco");
         }
     }
 }

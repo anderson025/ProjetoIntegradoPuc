@@ -23,6 +23,8 @@ namespace ClinicaFisioterapia.Controllers {
 		public async Task<ActionResult> AdicionaSessao([FromBody] SessaoDTO sessaoDto) {
 
 			try {
+
+				//Implementar  se existe avaliacao
 				var sessao = await _sessaoService.AdicionaSessao(sessaoDto);
 
 				return CreatedAtRoute(nameof(BuscaSessaoPorId), new { id = sessao.Id }, sessao);
