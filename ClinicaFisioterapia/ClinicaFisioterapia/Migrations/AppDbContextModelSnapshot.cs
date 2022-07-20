@@ -190,32 +190,19 @@ namespace ClinicaFisioterapia.Migrations
                     b.Property<DateTime>("DataEvolucao")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DataSessao")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("FuncionarioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdSessao")
                         .HasColumnType("int");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PacienteId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
-
                     b.HasIndex("IdSessao")
                         .IsUnique();
-
-                    b.HasIndex("PacienteId");
 
                     b.ToTable("Evolucao");
                 });
@@ -248,6 +235,9 @@ namespace ClinicaFisioterapia.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EvolucaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("Idade")
@@ -285,6 +275,8 @@ namespace ClinicaFisioterapia.Migrations
 
                     b.HasIndex("EnderecoId")
                         .IsUnique();
+
+                    b.HasIndex("EvolucaoId");
 
                     b.ToTable("Funcionario");
                 });
@@ -338,6 +330,9 @@ namespace ClinicaFisioterapia.Migrations
                     b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EvolucaoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Idade")
                         .HasColumnType("int");
 
@@ -366,6 +361,8 @@ namespace ClinicaFisioterapia.Migrations
                     b.HasIndex("EnderecoId")
                         .IsUnique();
 
+                    b.HasIndex("EvolucaoId");
+
                     b.ToTable("Pacientes");
                 });
 
@@ -391,11 +388,9 @@ namespace ClinicaFisioterapia.Migrations
 
                     b.HasIndex("IdAvaliacao");
 
-                    b.HasIndex("IdFuncionario")
-                        .IsUnique();
+                    b.HasIndex("IdFuncionario");
 
-                    b.HasIndex("IdPaciente")
-                        .IsUnique();
+                    b.HasIndex("IdPaciente");
 
                     b.ToTable("Sessao");
                 });
@@ -448,23 +443,11 @@ namespace ClinicaFisioterapia.Migrations
 
             modelBuilder.Entity("ClinicaFisioterapia.Models.Evolucao", b =>
                 {
-                    b.HasOne("ClinicaFisioterapia.Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioId");
-
                     b.HasOne("ClinicaFisioterapia.Models.Sessao", "Sessao")
                         .WithOne("Evolucao")
                         .HasForeignKey("ClinicaFisioterapia.Models.Evolucao", "IdSessao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ClinicaFisioterapia.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("PacienteId");
-
-                    b.Navigation("Funcionario");
-
-                    b.Navigation("Paciente");
 
                     b.Navigation("Sessao");
                 });
@@ -477,7 +460,13 @@ namespace ClinicaFisioterapia.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClinicaFisioterapia.Models.Evolucao", "Evolucao")
+                        .WithMany()
+                        .HasForeignKey("EvolucaoId");
+
                     b.Navigation("Endereco");
+
+                    b.Navigation("Evolucao");
                 });
 
             modelBuilder.Entity("ClinicaFisioterapia.Models.Paciente", b =>
@@ -488,7 +477,13 @@ namespace ClinicaFisioterapia.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClinicaFisioterapia.Models.Evolucao", "Evolucao")
+                        .WithMany()
+                        .HasForeignKey("EvolucaoId");
+
                     b.Navigation("Endereco");
+
+                    b.Navigation("Evolucao");
                 });
 
             modelBuilder.Entity("ClinicaFisioterapia.Models.Sessao", b =>
@@ -500,14 +495,14 @@ namespace ClinicaFisioterapia.Migrations
                         .IsRequired();
 
                     b.HasOne("ClinicaFisioterapia.Models.Funcionario", "Funcionario")
-                        .WithOne("Sessao")
-                        .HasForeignKey("ClinicaFisioterapia.Models.Sessao", "IdFuncionario")
+                        .WithMany("Sessoes")
+                        .HasForeignKey("IdFuncionario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ClinicaFisioterapia.Models.Paciente", "Paciente")
-                        .WithOne("Sessao")
-                        .HasForeignKey("ClinicaFisioterapia.Models.Sessao", "IdPaciente")
+                        .WithMany("Sessoes")
+                        .HasForeignKey("IdPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -536,7 +531,7 @@ namespace ClinicaFisioterapia.Migrations
 
                     b.Navigation("Avaliacoes");
 
-                    b.Navigation("Sessao");
+                    b.Navigation("Sessoes");
                 });
 
             modelBuilder.Entity("ClinicaFisioterapia.Models.Medico", b =>
@@ -550,7 +545,7 @@ namespace ClinicaFisioterapia.Migrations
 
                     b.Navigation("Avaliacao");
 
-                    b.Navigation("Sessao");
+                    b.Navigation("Sessoes");
                 });
 
             modelBuilder.Entity("ClinicaFisioterapia.Models.Sessao", b =>

@@ -19,13 +19,13 @@ namespace ClinicaFisioterapia.Services {
 			_mapper = mapper;
 		}
 
-		public async Task<Avaliacao> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto) {
+		public async Task<ExibeAvaliacaoDTO> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto) {
 
 
 			Avaliacao avaliacao = _mapper.Map<Avaliacao>(avaliacaoDto);
 			_context.Avaliacao.Add(avaliacao);
 			await _context.SaveChangesAsync();
-			return avaliacao;
+			return _mapper.Map<ExibeAvaliacaoDTO>(avaliacao);
 
 		}
 
@@ -42,9 +42,9 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<Avaliacao> BuscaAvaliacaoPorId(Int32 id) {
+		public async Task<ExibeAvaliacaoDTO> BuscaAvaliacaoPorId(Int32 id) {
 			var avaliacao = await _context.Avaliacao.FindAsync(id);
-			return avaliacao;
+			return _mapper.Map<ExibeAvaliacaoDTO>(avaliacao);
 		}
 
 		public Task<IEnumerable<Avaliacao>> BuscaPorData(string data) {

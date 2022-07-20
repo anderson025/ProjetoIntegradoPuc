@@ -50,15 +50,26 @@ namespace ClinicaFisioterapia.Context {
 				.WithMany(avaliacao => avaliacao.Sessoes)
 				.HasForeignKey(sessao => sessao.IdAvaliacao);
 
-			modelBuilder.Entity<Paciente>()
-				.HasOne(paciente => paciente.Sessao)
-				.WithOne(sessao => sessao.Paciente)
-				.HasForeignKey<Sessao>(sessao => sessao.IdPaciente);
+			
+			modelBuilder.Entity<Sessao>()
+				.HasOne(sessao => sessao.Paciente)
+				.WithMany(paciente => paciente.Sessoes)
+				.HasForeignKey(sessao => sessao.IdPaciente);
 
-			modelBuilder.Entity<Funcionario>()
-				.HasOne(funcionario => funcionario.Sessao)
-				.WithOne(sessao => sessao.Funcionario)
-				.HasForeignKey<Sessao>(sessao => sessao.IdFuncionario);
+			modelBuilder.Entity<Sessao>()
+				.HasOne(sessao => sessao.Funcionario)
+				.WithMany(funcionario => funcionario.Sessoes)
+				.HasForeignKey(sessao => sessao.IdFuncionario);
+
+			//modelBuilder.Entity<Paciente>()
+			//	.HasOne(paciente => paciente.Evolucao)
+			//	.WithMany(evolucao => evolucao.Paciente)
+			//	.HasForeignKey(paciente => paciente.IdEvolucaoPaciente);
+
+			//modelBuilder.Entity<Funcionario>()
+			//	.HasOne(funcionario => funcionario.Evolucao)
+			//	.WithMany(evolucao => evolucao.Funcionario)
+			//	.HasForeignKey(funcionario => funcionario.IdEvolucaoFuncionario);
 
 			modelBuilder.Entity<Sessao>()
 				.HasOne(sessao => sessao.Evolucao)

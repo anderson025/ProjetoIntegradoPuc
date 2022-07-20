@@ -22,7 +22,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 			try {
 
-				Avaliacao avaliacao = await _avaliacaoService.AdicionaAvaliacao(avaliacaoDto);
+				var avaliacao = await _avaliacaoService.AdicionaAvaliacao(avaliacaoDto);
 				//if (avaliacao == null) {
 				//	return BadRequest("Data não disponível");
 				//}
@@ -37,15 +37,15 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		[HttpGet("{id:int}", Name = "BuscaAvaliacaoPorId")]
-		public async Task<ActionResult<Funcionario>> BuscaAvaliacaoPorId(Int32 id) {
+		public async Task<ActionResult<ExibeAvaliacaoDTO>> BuscaAvaliacaoPorId(Int32 id) {
 
 			try {
-				var funcionario = await _avaliacaoService.BuscaAvaliacaoPorId(id);
+				var avaliacao = await _avaliacaoService.BuscaAvaliacaoPorId(id);
 
-				if (funcionario == null) {
+				if (avaliacao == null) {
 					return NotFound($"Não existe o avaliacao com id {id}");
 				}
-				return Ok(funcionario);
+				return Ok(avaliacao);
 			}
 			catch {
 

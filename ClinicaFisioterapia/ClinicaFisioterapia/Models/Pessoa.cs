@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -35,9 +36,9 @@ namespace ClinicaFisioterapia.Models {
 
 		[JsonIgnore]
 		public virtual Agendamento Agendamento { get; set; }
+		
 
-		[JsonIgnore]
-		public virtual Sessao Sessao { get; set; }
+		
 
 	}
 

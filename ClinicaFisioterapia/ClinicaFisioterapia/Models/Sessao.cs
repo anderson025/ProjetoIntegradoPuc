@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -9,17 +10,19 @@ namespace ClinicaFisioterapia.Models {
 
 		[JsonIgnore]
 		public virtual Avaliacao Avaliacao { get; set; }
-		public Int32 IdAvaliacao { get; set; }
-		[JsonIgnore]
-		public virtual Paciente Paciente { get; set; }
-		public Int32 IdPaciente { get; set; }
+		public Int32 IdAvaliacao { get; set; }		
+
 		public DateTime DataSessao { get; set; }
 		[JsonIgnore]
 		public virtual Funcionario Funcionario { get; set; }
 		public Int32 IdFuncionario { get; set; }
 
+
 		[JsonIgnore]
 		public virtual Evolucao Evolucao { get; set; }
+
 		
+		public virtual Paciente Paciente { get; set; }
+		public Int32 IdPaciente { get; set; }
 	}
 }
