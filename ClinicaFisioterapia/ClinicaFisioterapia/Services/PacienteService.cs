@@ -1,4 +1,6 @@
-﻿using ClinicaFisioterapia.Context;
+﻿using AutoMapper;
+using ClinicaFisioterapia.Context;
+using ClinicaFisioterapia.Context.Dtos.Paciente;
 using ClinicaFisioterapia.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,12 +12,15 @@ namespace ClinicaFisioterapia.Services {
 	public class PacienteService : IPacienteService {
 
 		private readonly AppDbContext _context;
+		private IMapper _mapper;
 
-		public PacienteService(AppDbContext context) {
+		public PacienteService(AppDbContext context, IMapper mapper) {
 			_context = context;
+			_mapper = mapper;
 		}
 
 		public async Task AdicionaPaciente(Paciente paciente) {
+			
 			_context.Pacientes.Add(paciente);
 			await _context.SaveChangesAsync();
 		}

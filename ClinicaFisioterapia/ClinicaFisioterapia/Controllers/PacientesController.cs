@@ -74,9 +74,9 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		[HttpPost(Name ="AdicionaPaciente")]
-		public async Task<ActionResult> AdicionaPaciente([FromBody] PacienteDTO pacienteDTO) {
+		public async Task<ActionResult> AdicionaPaciente([FromBody] Paciente paciente) {
 
-			Paciente paciente = _mapper.Map<Paciente>(pacienteDTO);
+			//Paciente paciente = _mapper.Map<Paciente>(pacienteDTO);
 			try {
 				await _pacienteService.AdicionaPaciente(paciente);
 

@@ -23,11 +23,7 @@ namespace ClinicaFisioterapia.Controllers {
 			try {
 				//Implementar consulta de avaliacao
 				//se existir, chamar o metodo de atualizar
-
-				var avaliacao = await _avaliacaoService.AdicionaAvaliacao(avaliacaoDto);
-				//if (avaliacao == null) {
-				//	return BadRequest("Data não disponível");
-				//}
+				var avaliacao = await _avaliacaoService.AdicionaAvaliacao(avaliacaoDto);				
 				return CreatedAtRoute(nameof(BuscaAvaliacaoPorId), new { id = avaliacao.Id }, avaliacao);
 			}
 			catch {
@@ -54,6 +50,40 @@ namespace ClinicaFisioterapia.Controllers {
 				return NotFound("Erro na requisição");
 			}
 
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<ActionResult> ApagaAvaliacao(Int32 id) {			
+			
+			try {
+				
+				await _avaliacaoService.ApagaAvaliacao(id);
+				return Ok($"Avaliacao de id {id} foi excluido com sucesso!");
+				
+			}
+			catch {
+
+				return BadRequest("Requisição inválida!");
+			}
+		}
+
+
+		[HttpPut("{id:int}")]
+		public async Task<ActionResult> AtualizaAvaliacao(int id, [FromBody] Avaliacao avaliacao) {
+
+			try {
+				if (avaliacao.Id == id) {
+					await _avaliacaoService.AtualizaAvaliacao(avaliacao);
+					return Ok($"Avaliacao com id= {id} foi atualizado com sucesso");
+				}
+				else {
+					return BadRequest("Erro na atualização");
+				}
+			}
+			catch {
+
+				return BadRequest("Erro na requisição");
+			}
 		}
 	}
 }

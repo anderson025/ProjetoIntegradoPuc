@@ -1,4 +1,5 @@
-﻿using ClinicaFisioterapia.Models;
+﻿using ClinicaFisioterapia.Context.Dtos.Paciente;
+using ClinicaFisioterapia.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -22,6 +22,6 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<IEnumerable<Avaliacao>> BuscaPorNomePaciente(String nomePaciente);
 
-		Task<IEnumerable<Avaliacao>> BuscaPorNomeFuncionario(String nomePaciente);
+		Task<IEnumerable<Avaliacao>> BuscaPorNomeFuncionario(String nomeFuncionario);
 	}
 }
