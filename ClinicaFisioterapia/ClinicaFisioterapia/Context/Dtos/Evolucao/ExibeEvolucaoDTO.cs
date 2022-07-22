@@ -1,13 +1,13 @@
-﻿using ClinicaFisioterapia.Context.Dtos.Funcionario;
-using ClinicaFisioterapia.Context.Dtos.Paciente;
-using ClinicaFisioterapia.Context.Dtos.Sessao;
+﻿using ClinicaFisioterapia.Context.Dtos.Sessao;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace ClinicaFisioterapia.Context.Dtos.Evolucao {
-	public class EvolucaoDTO {
+	public class ExibeEvolucaoDTO {
 
+		[Key]
+		public Int32 Id { get; set; }
 		[JsonIgnore]
 		public virtual SessaoDTO Sessao { get; set; }
 		[Required]
@@ -16,10 +16,5 @@ namespace ClinicaFisioterapia.Context.Dtos.Evolucao {
 
 		public Status Status { get; set; }
 		public DateTime DataEvolucao { get; set; }
-	}
-
-	public enum Status {
-		pendente = 0,
-		concluido = 1
 	}
 }

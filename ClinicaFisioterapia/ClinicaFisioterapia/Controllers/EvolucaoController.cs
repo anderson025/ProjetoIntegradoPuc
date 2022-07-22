@@ -6,23 +6,23 @@ using System;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Controllers {
-	public class EvolucaoController : Controller {
 
-		public IEvolucaoService _evolucaoService;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class EvolucaoController : ControllerBase {
+
+		private IEvolucaoService _evolucaoService;
 
 		public EvolucaoController(IEvolucaoService evolucaoService) {
 			_evolucaoService = evolucaoService;
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> AdicionaEvolucao([FromBody] EvolucaoDTO evolucaoDto) {
+		public async Task<ActionResult> AdicionaEvolucao([FromBody] Evolucao evolucaoDto) {
 
 			try {
-				//Implementar consulta de avaliacao
-				//se existir, chamar o metodo de atualizar
-
 				var evolucao = await _evolucaoService.AdicionaEvolucao(evolucaoDto);
-				
+
 				return CreatedAtRoute(nameof(BuscaEvolucaoPorId), new { id = evolucao.Id }, evolucao);
 			}
 			catch {
@@ -32,7 +32,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 		}
 
-		[HttpGet("{id:int}", Name = "BuscaAvaliacaoPorId")]
+		[HttpGet("{id:int}", Name = "BuscaEvolucaoPorId")]
 		public async Task<ActionResult<Evolucao>> BuscaEvolucaoPorId(Int32 id) {
 
 			try {
@@ -50,37 +50,37 @@ namespace ClinicaFisioterapia.Controllers {
 
 		}
 
-		[HttpDelete("{id}")]
-		public async Task<ActionResult> ApagaEvolucao(Int32 id) {
+		//[HttpDelete("{id}")]
+		//public async Task<ActionResult> ApagaEvolucao(Int32 id) {
 
-			try {
+		//	try {
 
-				await _evolucaoService.ApagaEvolucao(id);
-				return Ok($"Evolucao de id {id} foi excluido com sucesso!");
+		//		await _evolucaoService.ApagaEvolucao(id);
+		//		return Ok($"Evolucao de id {id} foi excluido com sucesso!");
 
-			}
-			catch {
+		//	}
+		//	catch {
 
-				return BadRequest("Requisição inválida!");
-			}
-		}
+		//		return BadRequest("Requisição inválida!");
+		//	}
+		//}
 
-		[HttpPut("{id:int}")]
-		public async Task<ActionResult> AtualizaEvolucao(int id, [FromBody] Evolucao evolucao) {
+		//[HttpPut("{id:int}")]
+		//public async Task<ActionResult> AtualizaEvolucao(int id, [FromBody] Evolucao evolucao) {
 
-			try {
-				if (evolucao.Id == id) {
-					await _evolucaoService.AtualizaEvolucao(evolucao);
-					return Ok($"Evolucao com id= {id} foi atualizado com sucesso");
-				}
-				else {
-					return BadRequest("Erro na atualização");
-				}
-			}
-			catch {
+		//	try {
+		//		if (evolucao.Id == id) {
+		//			await _evolucaoService.AtualizaEvolucao(evolucao);
+		//			return Ok($"Evolucao com id= {id} foi atualizado com sucesso");
+		//		}
+		//		else {
+		//			return BadRequest("Erro na atualização");
+		//		}
+		//	}
+		//	catch {
 
-				return BadRequest("Erro na requisição");
-			}
-		}
+		//		return BadRequest("Erro na requisição");
+		//	}
+		//}
 	}
 }

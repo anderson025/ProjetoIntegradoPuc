@@ -10,11 +10,14 @@ namespace ClinicaFisioterapia.Profiles {
 
 		public EvolucaoProfile() {
 
-			CreateMap<EvolucaoDTO, Evolucao>();
-			CreateMap<Evolucao, EvolucaoDTO>();			
+			CreateMap<Evolucao, EvolucaoDTO>();
+			CreateMap<EvolucaoDTO, Evolucao>();			
 
 			CreateMap<Sessao, SessaoDTO>();
 			CreateMap<SessaoDTO, Sessao>();
+			
+			
+			
 		}
 	}
 }
