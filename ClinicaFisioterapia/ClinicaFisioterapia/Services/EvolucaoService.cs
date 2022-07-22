@@ -20,9 +20,9 @@ namespace ClinicaFisioterapia.Services {
 
 
 
-		public async Task<ExibeEvolucaoDTO> AdicionaEvolucao(Evolucao evolucaoDto) {
+		public async Task<ExibeEvolucaoDTO> AdicionaEvolucao(EvolucaoDTO evolucaoDto) {
 
-			Evolucao evolucao = evolucaoDto;
+			Evolucao evolucao = _mapper.Map<Evolucao>(evolucaoDto);
 			_context.Evolucao.Add(evolucao);
 			await _context.SaveChangesAsync();
 			return _mapper.Map<ExibeEvolucaoDTO>(evolucao);

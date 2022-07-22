@@ -1,6 +1,7 @@
 ﻿using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Context.Dtos.Paciente;
 using ClinicaFisioterapia.Context.Dtos.Sessao;
+using ClinicaFisioterapia.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -17,9 +18,5 @@ namespace ClinicaFisioterapia.Context.Dtos.Evolucao {
 		public Status Status { get; set; }
 		public DateTime DataEvolucao { get; set; }
 	}
-
-	public enum Status {
-		pendente = 0,
-		concluido = 1
-	}
+	
 }

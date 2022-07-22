@@ -1,4 +1,5 @@
 ﻿using ClinicaFisioterapia.Context.Dtos.Sessao;
+using ClinicaFisioterapia.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

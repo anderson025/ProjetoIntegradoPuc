@@ -9,7 +9,7 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<Evolucao> BuscaEvolucaoPorId(Int32 id);
 
-		Task<ExibeEvolucaoDTO> AdicionaEvolucao(Evolucao evolucaoDto);
+		Task<ExibeEvolucaoDTO> AdicionaEvolucao(EvolucaoDTO evolucaoDto);
 
 		Task ApagaEvolucao(Int32 id);
 

@@ -15,6 +15,9 @@ namespace ClinicaFisioterapia.Profiles {
 
 			CreateMap<Sessao, SessaoDTO>();
 			CreateMap<SessaoDTO, Sessao>();
+
+			CreateMap<Evolucao, ExibeEvolucaoDTO>();
+			CreateMap<ExibeEvolucaoDTO, Evolucao>();
 			
 			
 			
