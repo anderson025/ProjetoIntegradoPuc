@@ -16,13 +16,8 @@ function App() {
 
   return (   
     <Router>
-      <div className="App">  
-      
-        <MenuAppBar>
-          <Routes />
-        </MenuAppBar>     
-        
-      </div>
+       <MenuAppBar>          
+       </MenuAppBar>     
     </Router>
   );
 }

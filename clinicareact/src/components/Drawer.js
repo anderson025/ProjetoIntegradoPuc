@@ -11,18 +11,6 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-{(['left', 'right', 'top', 'bottom']).map((anchor) => (
-    <React.Fragment key={anchor}>
-      <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-      <Drawer
-        anchor={anchor}
-        open={state[anchor]}
-        onClose={toggleDrawer(anchor, false)}
-      >
-        {list(anchor)}
-      </Drawer>
-    </React.Fragment>
-  ))}
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({

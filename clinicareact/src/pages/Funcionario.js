@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { FuncionarioService } from '../api/FuncionarioService';
-import {Container, Modal, ModalBody, ModalFooter, ModalHeader, Navbar} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+
+import { useNavigate } from 'react-router-dom';
+import { Stack } from '@mui/material';
+
 
 export const Funcionario = () => {
     
@@ -29,6 +33,11 @@ export const Funcionario = () => {
     console.log(funcionarioSelecionado);
   }
 
+  const editarFuncionario =(funcionario, opcao) =>{
+      setFuncionarioSelecionado(funcionario);
+      (opcao === "Editar") && navigate('/EditarFuncionario')
+  }
+
   const funcionarioGet = async()=>{
     await FuncionarioService.getFuncionarios()
     .then(response => {
@@ -53,12 +62,20 @@ export const Funcionario = () => {
     funcionarioGet();
   })
 
-
+  const navigate = useNavigate();
   return (
 
-    <><br /><h3>Cadastro de funcionarios</h3><header>
-      <button className="btn btn-sucess" onClick={() => abrirFecharIncluir()}> Novo Funcionário</button>
-    </header><table className="table table-bordered">
+    <><br /><h4>Cadastro de funcionarios</h4><br/>
+    
+    <header>
+      <div>
+        <Stack direction="row" spacing={2}>
+            <Button variant="contained" color="success" onClick={() => navigate('/NovoFuncionario')}>Novo Funcionário</Button>       
+        </Stack>
+      </div>      
+    </header><br/>
+
+    <table className="table table-bordered">
         <thead>
           <tr>
             <th>Id</th>
@@ -72,8 +89,8 @@ export const Funcionario = () => {
               <td>{funcionario.id}</td>
               <td>{funcionario.nome}</td>
               <td>
-                <button className="btn btn-primary"> Editar</button>{" "}
-                <button className="btn btn-danger"> Excluir</button>
+                <button className="btn btn-primary"  onClick={() => editarFuncionario(funcionario, "Editar")}> Editar</button>{" "}
+                <button className="btn btn-danger" onClick={() => editarFuncionario(funcionario, "Excluir")}> Excluir</button>
               </td>
             </tr>
 
