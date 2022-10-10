@@ -3,6 +3,8 @@ using ClinicaFisioterapia.Context.Dtos;
 using ClinicaFisioterapia.Context.Dtos.Funcionario;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +13,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace ClinicaFisioterapia.Controllers {
 
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
 	public class FuncionariosController : ControllerBase {
 
 

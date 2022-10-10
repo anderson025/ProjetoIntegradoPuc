@@ -25,12 +25,24 @@ namespace ClinicaFisioterapia.Controllers {
 
 			try {
 
+				var pacienteMarcado = await _agendamentoService.BuscaPorIdPaciente(agendamentoDto.IdPaciente);
 
-				Agendamento agendamento = await _agendamentoService.AdicionaAgendamento(agendamentoDto);
-				if (agendamento == null) {
-					return BadRequest("Data não disponível");
+				if (pacienteMarcado.Count == 0) {
+
+					Agendamento agendamento = await _agendamentoService.AdicionaAgendamento(agendamentoDto);
+
+					if (agendamento == null) {
+						return BadRequest("Data não disponível");
+					}
+					return CreatedAtRoute(nameof(BuscaAgendamentoPorId), new { id = agendamento.IdAgendamento }, agendamento);
+
 				}
-				return CreatedAtRoute(nameof(BuscaAgendamentoPorId), new { id = agendamento.IdAgendamento }, agendamento);
+				else {
+
+					return BadRequest("Paciente já possui agendamento");
+				}
+
+
 			}
 			catch {
 
@@ -71,6 +83,21 @@ namespace ClinicaFisioterapia.Controllers {
 			}
 		}
 
+		[HttpGet("BuscaTodosPendenteAgendamentos")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IAsyncEnumerable<ExibeAgendamentoDTO>>> BuscaTodosPendenteAgendamentos() {
+
+			try {
+				var agendamento = await _agendamentoService.BuscaTodasPendentesAgendamento();
+				return Ok(agendamento);
+			}
+			catch {
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Agendamento");
+			}
+		}
+
 		[HttpDelete("{id}")]
 		public async Task<ActionResult> ApagaAgendamento(Int32 id) {
 
@@ -102,8 +129,8 @@ namespace ClinicaFisioterapia.Controllers {
 
 				return BadRequest("Erro na requisição");
 			}
-		}		
-		
+		}
+
 
 		[HttpGet("BuscaAgendamentoPorData")]
 		public async Task<ActionResult<IAsyncEnumerable<AgendamentoDTO>>> BuscaAgendamentoPorData([FromQuery] string data) {

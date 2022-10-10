@@ -1,14 +1,19 @@
 ﻿using ClinicaFisioterapia.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicaFisioterapia.Context {
-	public class AppDbContext : DbContext{
+	public class AppDbContext : IdentityDbContext<IdentityUser>{
 
 		public AppDbContext(DbContextOptions<AppDbContext> options): base(options) {
 
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<Endereco>()
 				.HasOne(endereco => endereco.Funcionario)
 				.WithOne(funcionario => funcionario.Endereco)
@@ -27,18 +32,18 @@ namespace ClinicaFisioterapia.Context {
 
 			modelBuilder.Entity<Agendamento>()
 				.HasOne(agendamento => agendamento.Funcionario)
-				.WithOne(funcionario => funcionario.Agendamento)
-				.HasForeignKey<Agendamento>(funcionario => funcionario.IdFuncionario);
+				.WithMany(funcionario => funcionario.Agendamentos)
+				.HasForeignKey(funcionario => funcionario.IdFuncionario);
 
 			modelBuilder.Entity<Avaliacao>()
 				.HasOne(avaliacao => avaliacao.Funcionario)
 				.WithMany(funcionario => funcionario.Avaliacoes)
 				.HasForeignKey(avaliacao => avaliacao.IdFuncionario);
 
-			modelBuilder.Entity<Avaliacao>()
-				.HasOne(avaliacao => avaliacao.Medico)
-				.WithMany(medico => medico.Avaliacoes)
-				.HasForeignKey(avaliacao => avaliacao.IdMedico);
+			//modelBuilder.Entity<Avaliacao>()
+			//	.HasOne(avaliacao => avaliacao.Medico)
+			//	.WithMany(medico => medico.Avaliacoes)
+			//	.HasForeignKey(avaliacao => avaliacao.IdMedico);
 
 			modelBuilder.Entity<Paciente>()
 				.HasOne(paciente => paciente.Avaliacao)

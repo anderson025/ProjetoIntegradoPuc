@@ -10,7 +10,7 @@ namespace ClinicaFisioterapia.Models {
 		public Int32 Id { get; set; }
 		[Required]
 		public String Nome { get; set; }
-		[Required]
+		
 		public DateTime DataNascimento { get; set; }
 		public Int32 Idade { get; set; }
 		[Required]
@@ -20,13 +20,13 @@ namespace ClinicaFisioterapia.Models {
 		public Sexo Sexo { get; set; }
 		public bool Situacao { get; set; }
 		public String Telefone { get; set; }
-		[Required]
+		
 		public String Celular { get; set; }
-		[Required]
+		
 		public Profissao Profissao { get; set; }
 		public String Convenio { get; set; }
 		public Int32 CarteiraConvenio { get; set; }
-		[Required]
+		
 		public virtual Endereco Endereco { get; set; }
 		public Int32 EnderecoId { get; set; }
 

@@ -20,9 +20,13 @@ namespace ClinicaFisioterapia.Services {
 			_mapper = mapper;
 		}
 
+		public AgendamentoService() {
+		}
+
 		public async Task<Agendamento> AdicionaAgendamento(AgendamentoDTO agendamentoDto) {
 
 			bool agendaMarcada = VerificaDisponibilidadeDaAgenda(agendamentoDto.DataAgendamento.ToString());
+
 
 			if (!agendaMarcada) {
 				Agendamento agendamento = _mapper.Map<Agendamento>(agendamentoDto);
@@ -44,9 +48,9 @@ namespace ClinicaFisioterapia.Services {
 
 				if (agendamentos.Count() > 0) {
 					return true;
-				}				
+				}
 
-			}	
+			}
 
 			return false;
 		}
@@ -79,7 +83,7 @@ namespace ClinicaFisioterapia.Services {
 
 		public async Task<ExibeAgendamentoDTO> BuscaAgendamentoPorId(Int32 id) {
 
-			var agendamento = await _context.Agendamento.FindAsync(id);			
+			var agendamento = await _context.Agendamento.FindAsync(id);
 			return _mapper.Map<ExibeAgendamentoDTO>(agendamento);
 		}
 
@@ -114,7 +118,7 @@ namespace ClinicaFisioterapia.Services {
 				agendamentoDTOs = await BuscaTodosAgendamentos();
 				return _mapper.Map<IEnumerable<Agendamento>>(agendamentoDTOs);
 			}
-			
+
 		}
 
 		public async Task<IEnumerable<Agendamento>> BuscaPorNomePaciente(string nomePaciente) {
@@ -131,6 +135,46 @@ namespace ClinicaFisioterapia.Services {
 				agendamentos = null;
 				return agendamentos;
 			}
+		}
+
+		public async Task<List<Agendamento>> BuscaPorIdPaciente(Int32? id) {
+
+			List<Agendamento> agendamentos;
+			//IEnumerable<ExibeFuncionarioDTO> funcionarioDTOs;
+			if (id != null) {
+
+				agendamentos = await _context.Agendamento.Where(n => n.Paciente.Id.Equals(id)).ToListAsync();
+				return agendamentos;
+
+			}
+			else {
+				agendamentos = null;
+				return agendamentos;
+			}
+		}
+
+		public async Task<IEnumerable<ExibeAgendamentoDTO>> BuscaTodasPendentesAgendamento() {
+
+			IEnumerable<Agendamento> agendamentos;
+			IEnumerable<ExibeAgendamentoDTO> agendamentoDTO;
+
+			try {
+
+				agendamentos = await _context.Agendamento.Where(n => n.PendenteAvaliacao.Equals(0)).ToListAsync();
+				return _mapper.Map<IEnumerable<ExibeAgendamentoDTO>>(agendamentos);
+
+			}
+			catch (Exception) {
+
+				agendamentoDTO = await BuscaTodosAgendamentos();
+				return agendamentoDTO;
+			}
+
+			
+
+
+
+
 		}
 	}
 }

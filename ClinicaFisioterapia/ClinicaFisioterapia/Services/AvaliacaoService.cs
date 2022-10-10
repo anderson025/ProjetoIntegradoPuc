@@ -6,6 +6,7 @@ using ClinicaFisioterapia.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Services {
@@ -59,8 +60,18 @@ namespace ClinicaFisioterapia.Services {
 			throw new System.NotImplementedException();
 		}
 
-		public Task<IEnumerable<ExibeAgendamentoDTO>> BuscaTodasAvaliacoes() {
-			throw new System.NotImplementedException();
+		public async Task<IEnumerable<ExibeAvaliacaoDTO>> BuscaTodasAvaliacoes() {
+
+			try {
+				var avaliacao = await _context.Avaliacao.ToListAsync();
+				return _mapper.Map<IEnumerable<ExibeAvaliacaoDTO>>(avaliacao);
+			}
+			catch {
+
+				throw;
+			}
 		}
+
+		
 	}
 }

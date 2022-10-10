@@ -5,7 +5,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20220828135217_Criando um novo banco com autenticacao jwt.cs" />
+    <Compile Include="Migrations\20220828135217_Criando um novo banco com autenticacao jwt.Designer.cs" />
+    <Compile Include="Migrations\20221006082217_Ajustanto regra do agendamento de 1 para muitos.cs" />
+    <Compile Include="Migrations\20221006082217_Ajustanto regra do agendamento de 1 para muitos.Designer.cs" />
+    <Compile Include="Migrations\20221006093657_Adicionando Colunas Nome paciente e nome funcionario no agendamento.cs" />
+    <Compile Include="Migrations\20221006093657_Adicionando Colunas Nome paciente e nome funcionario no agendamento.Designer.cs" />
+    <Compile Include="Migrations\20221006094048_Ajustando nome funcionario.cs" />
+    <Compile Include="Migrations\20221006094048_Ajustando nome funcionario.Designer.cs" />
+    <Compile Include="Migrations\20221010104435_Teste migration.cs" />
+    <Compile Include="Migrations\20221010104435_Teste migration.Designer.cs" />
+    <Compile Include="Migrations\20221010104840_Remover relacionamento com medico e avaliacao.cs" />
+    <Compile Include="Migrations\20221010104840_Remover relacionamento com medico e avaliacao.Designer.cs" />
+    <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />

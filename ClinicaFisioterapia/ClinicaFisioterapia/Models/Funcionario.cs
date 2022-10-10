@@ -16,7 +16,12 @@ namespace ClinicaFisioterapia.Models {
 		public virtual List<Avaliacao> Avaliacoes { get; set; }
 
 		[JsonIgnore]
-		public virtual List<Sessao> Sessoes { get; set; }		
+		public virtual List<Sessao> Sessoes { get; set; }
+
+
+		[JsonIgnore]
+		public virtual List<Agendamento> Agendamentos { get; set; }
+
 
 		//[JsonIgnore]
 		//public virtual Evolucao Evolucao { get; set; }

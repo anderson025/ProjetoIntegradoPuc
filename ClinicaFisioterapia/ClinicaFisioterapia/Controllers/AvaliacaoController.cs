@@ -1,14 +1,19 @@
-﻿using ClinicaFisioterapia.Context.Dtos.Avaliacao;
+﻿using ClinicaFisioterapia.Context.Dtos.Agendamento;
+using ClinicaFisioterapia.Context.Dtos.Avaliacao;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClinicaFisioterapia.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	public class AvaliacaoController : ControllerBase {
 
 		public IAvaliacaoService _avaliacaoService;
@@ -50,6 +55,22 @@ namespace ClinicaFisioterapia.Controllers {
 				return NotFound("Erro na requisição");
 			}
 
+		}
+
+
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IAsyncEnumerable<ExibeAvaliacaoDTO>>> BuscaTodasAvaliacoes() {
+
+			try {
+				var avaliacao = await _avaliacaoService.BuscaTodasAvaliacoes();
+				return Ok(avaliacao);
+			}
+			catch {
+
+				return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao tentar obter Avaliacao");
+			}
 		}
 
 		[HttpDelete("{id}")]

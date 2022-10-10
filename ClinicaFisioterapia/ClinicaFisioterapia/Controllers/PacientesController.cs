@@ -3,6 +3,8 @@ using ClinicaFisioterapia.Context.Dtos;
 using ClinicaFisioterapia.Context.Dtos.Paciente;
 using ClinicaFisioterapia.Models;
 using ClinicaFisioterapia.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +15,8 @@ namespace ClinicaFisioterapia.Controllers {
 
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
 	public class PacientesController : Controller {
 
 		private IPacienteService _pacienteService;

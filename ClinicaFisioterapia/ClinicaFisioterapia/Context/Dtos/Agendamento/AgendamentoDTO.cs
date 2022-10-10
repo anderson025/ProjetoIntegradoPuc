@@ -12,11 +12,15 @@ namespace ClinicaFisioterapia.Context.Dtos.Agendamento {
 		public virtual FuncionarioDTO Funcionario { get; set; }
 		[Required]
 		public int IdFuncionario { get; set; }
+		public String NomeFunciorio { get; set; }
 
 		[JsonIgnore]
 		public virtual PacienteDTO Paciente { get; set; }
+
 		[Required]
 		public int IdPaciente { get; set; }
+		public String NomePaciente { get; set; }
+
 		[Required]
 		public DateTime DataAgendamento { get; set; }
 

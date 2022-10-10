@@ -14,13 +14,19 @@ namespace ClinicaFisioterapia.Context.Dtos.Avaliacao {
 		[Required]
 		public Int32 IdFuncionario { get; set; }
 
+		public String NomeFuncionario { get; set; }
+
 		[JsonIgnore]
 		public virtual PacienteDTO Paciente { get; set; }
 		public Int32 IdPaciente { get; set; }
+		public String NomePaciente { get; set; }
+
+		public DateTime DataAvaliacao { get; set; }
 
 		[JsonIgnore]
 		public virtual MedicoDTO Medico { get; set; }
-		public Int32 IdMedico { get; set; }
+		public String NomeMedico { get; set; }
+		public String RegistroMedico { get; set; }
 
 		public Double Peso { get; set; }
 		public Double Altura { get; set; }

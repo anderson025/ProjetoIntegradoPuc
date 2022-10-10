@@ -13,7 +13,7 @@ namespace ClinicaFisioterapia.Models {
 		[Required]
 		public String CRM { get; set; }
 
-		[JsonIgnore]
-		public virtual List<Avaliacao> Avaliacoes { get; set; }
+		//[JsonIgnore]
+		//public virtual List<Avaliacao> Avaliacoes { get; set; }
 	}
 }

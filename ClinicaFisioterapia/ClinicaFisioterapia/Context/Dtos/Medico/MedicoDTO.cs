@@ -12,7 +12,7 @@ namespace ClinicaFisioterapia.Context.Dtos.Medico {
 		[Required]
 		public String CRM { get; set; }
 
-		[JsonIgnore]
-		public virtual List<AvaliacaoDTO> Avaliacoes { get; set; }
+		//[JsonIgnore]
+		//public virtual List<AvaliacaoDTO> Avaliacoes { get; set; }
 	}
 }
