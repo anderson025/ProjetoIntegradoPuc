@@ -16,54 +16,42 @@ import "../NovaAvaliacao/styles.css";
 export default function NovaAvaliacao (){
 
 const [id , setId] = useState(null);
+const [idFuncionario, setIdFuncionario] = useState('');
+const [nomeFuncionario, setNomeFuncionario] = useState('');
+const [idPaciente, setIdPaciente] = useState('');
+const [nomePaciente, setNomePaciente] = useState('');
 const [nome, setNome] = useState('');
 const [idade, setIdade] = useState('');
-const [dataNasci, setDataNasci] = useState('');   
-// const [rg, setRg] = useState(''); 
-// const [cpf, setCpf] = useState('');
-// const [telefone, setTelefone] = useState('');
-// const [celular, setCelular] = useState(''); 
-// const [email, setEmail] = useState(''); 
-// const [situacao, setSituacao] = useState(true); 
-// const [convenio, setConvenio] = useState(''); 
-// const [carteiraConvenio, setCarteiraConvenio] = useState(''); 
-// const [rua, setRua] = useState(''); 
-// const [numero, setNumero] = useState(''); 
-// const [bairro, setBairro] = useState(''); 
-// const [cep, setCep] = useState(''); 
-// const [cidade, setCidade] = useState(''); 
-// const [estado, setEstado] = useState(''); 
-// const [uf, setUf] = useState(''); 
-//const [enderecoId, setEnderecoId] = useState(''); 
+const [dataNasci, setDataNasci] = useState(''); 
 
-// const [sexo, setSexo] = useState(0);
 
 
 const [dorme, setDorme] = useState(true);
 const [fuma, setFuma] = useState(true);
-const [lesao, setLesao] = useState(true);
+const [historicoLesao, setHistoricoLesao] = useState(true);
 const [cirurgia, setCirurgia] = useState(true);
 const [atividade, setAtividade] = useState(true);
-const [mdominante, setMdominante] = useState(true);
+const [membroDominante, setMdominante] = useState(1);
 const [profissao, setProfissao] = useState(0);
 const {avaliacaoId} = useParams();
 
+
 const [dataAvaliacao, setDataAvaliacao] = useState('');
-const [nameMedico, setNomeMedico] = useState('');
-const [crm, setCrm] = useState('');
-const [peso, setPeso] = useState('');
-const [altura, setAltura] = useState('');
+const [nomeMedico, setNomeMedico] = useState('');
+const [registroMedico, setCrm] = useState('');
+const [peso, setPeso] = useState(null);
+const [altura, setAltura] = useState(null);
 const [diagnostico, setDiagnostico] = useState('');
 const [hma, setHma] = useState('');
-const [comorbidades, setComorbidades] = useState('');
+const [comobirdades, setComobirdades] = useState('');
 const [medicacaoEmUso, setMedicacaoEmUso] = useState('');
-const [medicacaoRelacionadaLesao, setMedicacaoRelacionadaLesao] = useState('');
+const [medicacaoLesao, setMedicacaoLesao] = useState('');
 const [avaliacaoPostural, setAvaliacaoPostural] = useState('');
 const [membrosAtivos, setMembrosAtivos] = useState('');
-const [membrosPassivo, setMembrosPassivo] = useState('');
-const [testeEspeciais, setTestesEspeciais] = useState('');
-const [testeFuncionais, setTesteFuncionais] = useState('');
-const [outrasObs, setOutrasObs] = useState('');
+const [membrosPassivos, setMembrosPassivos] = useState('');
+const [testesEspeciais, setTestesEspeciais] = useState('');
+const [testesFuncionais, setTesteFuncionais] = useState('');
+const [outrasObservacoes, setOutrasObservacoes] = useState('');
 const [condutaCurtoPrazo, setCondutaCurtoPrazo] = useState('');
 const [condutaMedioPrazo, setCondutaMedioPrazo] = useState('');
 const [condutaLongoPrazo, setCondutaLongoPrazo] = useState('');
@@ -75,22 +63,26 @@ const [dataAgendamento, setDataAgendamento] = useState('');
 
 const navigate = useNavigate();
 
-const agendamentoChange = (event) =>{
+const[funcionario, setFuncionario] = useState([]);
 
-    var agenda = document.getElementById("id-data-avaliacao").value;
-    var dataFull = new Date(agenda).toISOString();
-    //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
-    const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
-    const [full, ano,dia,mes] = regex.exec(dataFull);
-        
-    const dataAgendada = `${ano}-${mes}-${dia}T03:00:00.000Z`;
-    setDataAvaliacao(dataAgendada);
-    
-    
+const agendaChange = (event) =>{
+
+  var agenda = document.getElementById("id-data-avaliacao").value;
+  var [dia,mes,ano] = agenda.split("/");
+  //var dataFull = new Date(agenda).toISOString();
+  // //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
+  // const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
+  // [full, ano,dia,mes] = regex.exec(dataFull);
+      
+  const dataAgendada = `${ano}-${mes}-${dia}T03:00:00.000Z`;
+  setDataAvaliacao(dataAgendada);// 73 260  335
+  
+  
 }
 
 const funcChange = (event) => {
-    setComboFunc(event.target.value);        
+    setComboFunc(event.target.value);
+           
   };
 
   const dormeChange = (event) => {
@@ -104,7 +96,7 @@ const funcChange = (event) => {
     setMdominante(event.target.value);
   };
   const lesaoChange = (event) => {
-    setLesao(event.target.value);
+    setHistoricoLesao(event.target.value);
   };
 
   const cirurgiaChange = (event) => {
@@ -115,16 +107,7 @@ const funcChange = (event) => {
     setAtividade(event.target.value);
   };
 
-    var funcionarioVet = [
-        {
-            value: '1',
-            label: "Fisioterapeuta 1"
-        },
-        {
-            value: '2',
-            label: "Fisioterapeuta 2"
-        }
-    ];
+   
     
 
     const dormeVet = [
@@ -196,19 +179,7 @@ const funcChange = (event) => {
           label: 'Direito',
         },
         
-      ];
-
-      const currencies = [
-        {
-          value: '0',
-          label: 'Fisioterapeuta',
-        },
-        {
-          value: '1',
-          label: 'Recepcionista',
-        },
-        
-      ];
+      ];      
 
       const token = localStorage.getItem('token');   
      
@@ -225,12 +196,23 @@ const funcChange = (event) => {
         month:"numeric",
         day:"numeric"
     }
-
+    var url_atual =''
     useEffect(() =>{
         if (avaliacaoId === '0') {
            return; 
         } else {
-            loadPaciente();
+          url_atual = window.location.href;
+          if (url_atual === `http://localhost:3000/avaliacao/editar/${avaliacaoId}`) {
+            loadAvaliacao();
+          }
+          else{
+            loadPaciente();            
+          }
+
+          api.get('api/Funcionarios', authorization)
+            .then(response => {setFuncionario(response.data);
+            },token)
+          
         }
     }, [])
 
@@ -238,8 +220,8 @@ const funcChange = (event) => {
         try {
             const response = await api.get(`api/pacientes/${avaliacaoId}`, authorization);
             
-            setId(response.data.id);
-            setNome(response.data.nome);
+            setIdPaciente(response.data.id);
+            setNomePaciente(response.data.nome);
             setIdade(response.data.idade);
             setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
 
@@ -249,10 +231,78 @@ const funcChange = (event) => {
             
 
         } catch (error) {
+
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
             alert('Erro ao tentar recuperar o Pacientes' + error);
             navigate('/avaliacao');
+          }
+            
         }
     }
+
+    async function loadAvaliacao(){
+      try {
+          const response = await api.get(`api/avaliacao/${avaliacaoId}`, authorization);
+          
+          setId(response.data.id);          
+          setNomeFuncionario(response.data.nomeFuncionario);
+          setIdFuncionario(response.data.idFuncionario);
+          setIdPaciente(response.data.idPaciente);          
+          setNomePaciente(response.data.nomePaciente);
+          setIdade(response.data.idade);
+          setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
+          setDataAvaliacao(new Date(response.data.dataAvaliacao).toLocaleDateString("pt-br", opcao));
+          setNomeMedico(response.data.nomeMedico);
+          setCrm(response.data.registroMedico);
+          //setComboFunc
+          setDiagnostico(response.data.diagnostico);
+          setAltura(response.data.altura);
+          setPeso(response.data.peso);
+          setHma(response.data.hma);
+          setComobirdades(response.data.comobirdades);
+          setMedicacaoEmUso(response.data.medicacaoEmUso);
+          setMedicacaoLesao(response.data.medicacaoLesao);
+          setDorme(response.data.dormeBem);
+          setFuma(response.data.fuma);
+          setMdominante(response.data.membroDominante);
+          setHistoricoLesao(response.data.historicoLesao);
+          setCirurgia(response.data.cirurgia);
+          setAtividade(response.data.praticaAtividadeFisica);
+          setAvaliacaoPostural(response.data.avaliacaoPostural);
+          setMembrosAtivos(response.data.membrosAtivos);
+          setMembrosPassivos(response.data.membrosPassivos);
+          setTesteFuncionais(response.data.testesFuncionais)
+          setTestesEspeciais(response.data.testesEspeciais);
+          setOutrasObservacoes(response.data.outrasObservacoes);
+          setCondutaCurtoPrazo(response.data.condutaCurtoPrazo);
+          setCondutaMedioPrazo(response.data.condutaMedioPrazo);
+          setCondutaLongoPrazo(response.data.condutaLongoPrazo);
+          
+
+          
+          
+
+      } catch (error) {
+
+        if(error.message.includes("401")){
+          localStorage.clear();
+          localStorage.setItem('token', '');                        
+          navigate('/');
+        }
+        else{
+          alert('Erro ao tentar recuperar o Pacientes' + error);
+          navigate('/avaliacao');
+
+        }
+
+          
+      }
+  }
     
 
     async function saveOrUpdate(event){
@@ -263,9 +313,13 @@ const funcChange = (event) => {
         var nomeFuncionario = select;
         var nomeFunciorio = select;  
         var idFuncionario = comboFunc;
-        var idPaciente = id;
+        //var idPaciente = id;
         var pendenteAvaliacao = 1;
-        var nomePaciente = nome;
+        //var nomePaciente = nome;
+        
+
+
+        
         
         const atualizaAgendamento = {
             idAgendamento,
@@ -277,43 +331,44 @@ const funcChange = (event) => {
             pendenteAvaliacao
         }
 
-        // const medico = {
-        //     nameMedico,
-        //     crm 
-        // }
+        var agenda = document.getElementById("id-data-avaliacao").value;
+        var [dia,mes,ano] = agenda.split("/");
+        //var dataFull = new Date(agenda).toISOString();
+        // //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
+        // const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
+        // [full, ano,dia,mes] = regex.exec(dataFull);
+            
+        var dataAvaliacao = `${ano}-${mes}-${dia}T03:00:00.000Z`;       
+        
 
         const data = {
 
             idFuncionario,
             nomeFuncionario,
             idPaciente,     
-            nome,
+            nomePaciente,
             dataAvaliacao, 
-            nameMedico,
-            crm,            
+            nomeMedico,
+            registroMedico,            
             peso,
             altura,
             diagnostico,
             hma,
-            comorbidades,
+            comobirdades,
             medicacaoEmUso,
-            medicacaoRelacionadaLesao,
+            medicacaoLesao,
             dorme,
-            fuma,
-            //remover observação fuma
-            mdominante,
-            lesao,
-            //remover do banco a descrição da lesao
-            cirurgia,
-            //remover obs cirurgia
-            atividade,
-            //remover obs atividade fisica
+            fuma,            
+            membroDominante,
+            historicoLesao,            
+            cirurgia,           
+            atividade,            
             avaliacaoPostural,
             membrosAtivos,
-            membrosPassivo,
-            testeEspeciais,
-            testeFuncionais,
-            outrasObs,
+            membrosPassivos,
+            testesEspeciais,
+            testesFuncionais,
+            outrasObservacoes,
             condutaCurtoPrazo,
             condutaMedioPrazo,
             condutaLongoPrazo            
@@ -322,24 +377,27 @@ const funcChange = (event) => {
 
         }
 
-       
-
+        console.log(data);
+        
         try {
 
-           // await api.post('/api/medico', medico, authorization);
-            await api.post('/api/avaliacao', data, authorization);
+          url_atual = window.location.href;
+          
+
+          if (url_atual === `http://localhost:3000/avaliacao/editar/${avaliacaoId}`) {
             
-           
+            data.id = id;
+            await api.put(`api/avaliacao/${avaliacaoId}`, data ,authorization);
+            alert('Agendamento Atualizado com sucesso!')
+          }
+          else{            
+            
+            await api.post('/api/avaliacao', data, authorization);          
+            
             await api.put(`api/agendamento/${idAgendamento}`, atualizaAgendamento ,authorization);
-            // if (avaliacaoId ==='0') {
-                
-            //     await api.post('/api/avaliacao', data, authorization);
-            // }
-            // else{
-            //     data.id = id;                               
-            //     await api.put(`api/avaliacao/${id}`,data,authorization);
-            // }
             alert('Agendamento incluido com sucesso!')
+          }        
+            
 
         } catch (error) {
             alert('Erro ao gravar Avaliacao' + error);
@@ -372,7 +430,7 @@ const funcChange = (event) => {
         <h4>Avaliacao</h4>
         {/* <h5>{avaliacaoId === '0'? 'Incluir Paciente': 'Atualizar Paciente'}</h5>                */}
         
-
+                
         <TextField
           disabled
           id="id-nome"
@@ -380,7 +438,7 @@ const funcChange = (event) => {
           placeholder="Nome completo"          
           variant="standard"
           name="nome"
-          value={nome}
+          value={nomePaciente}
           onChange={e => setNome(e.target.value)}
         />
        
@@ -406,16 +464,29 @@ const funcChange = (event) => {
           value = {dataNasci}
           onChange={e => setDataNasci(e.target.value)}
         />
+        {url_atual === `http://localhost:3000/avaliacao/editar/${avaliacaoId}`?
         <TextField
-          required
+          disabled
           id="id-data-avaliacao"
           label="Data Avaliacao:"
           placeholder="DD/MM/YYYY"          
           variant="standard"
           name="dataAvaliacao"
-          //value = {dataNasci}
-          onChange={agendamentoChange}
+          value = {dataAvaliacao}
+          onChange={agendaChange}
         />
+        :
+        <TextField
+        required
+        id="id-data-avaliacao"
+        label="Data Avaliacao:"
+        placeholder="DD/MM/YYYY"          
+        variant="standard"
+        name="dataAvaliacao"
+        //value = {dataAvaliacao}
+        onChange={e =>setDataAvaliacao(e.target.value)}
+        />
+        }
         <TextField
           required
           id="nome-medico"
@@ -423,7 +494,7 @@ const funcChange = (event) => {
           placeholder="Dr Jose da silva"                 
           variant="standard"
           name="medico"
-        //   value={rg}
+          value={nomeMedico}
           onChange={e => setNomeMedico(e.target.value)}
         />
         <TextField
@@ -433,7 +504,7 @@ const funcChange = (event) => {
           placeholder="CRM - 9999"          
           variant="standard"
           name="registro"
-        //   value={registro}
+          value={registroMedico}
           onChange={e => setCrm(e.target.value)}
         />
         <TextField
@@ -445,11 +516,11 @@ const funcChange = (event) => {
         helperText="Selecione o funcionario"
         variant="standard"
         >
-            {funcionarioVet.map((option) => (
-            <MenuItem key={option.value} value={option.value} name="fisio"
+            {funcionario.map((funcionarios) => (
+            <MenuItem key={funcionarios.id} value={funcionarios.id} name="fisio"
                                 
             >
-             {option.label} 
+             {funcionarios.nome} 
             </MenuItem>
          ))}
 
@@ -461,7 +532,7 @@ const funcChange = (event) => {
           placeholder="Ex: 90"          
           variant="standard"
           name="peso"
-        //   value={celular}
+          value={peso}
           onChange={e => setPeso(e.target.value)}
         />
         <TextField
@@ -471,7 +542,7 @@ const funcChange = (event) => {
           placeholder="Ex: 1,70"          
           variant="standard"
           name="altura"
-        //   value={celular}
+          value={altura}
           onChange={e => setAltura(e.target.value)}
         />
 
@@ -482,7 +553,7 @@ const funcChange = (event) => {
                   
           variant="standard"
           name="diagnostico"
-        //   value={email}
+          value={diagnostico}
           onChange={e => setDiagnostico(e.target.value)}
         />
 
@@ -492,7 +563,7 @@ const funcChange = (event) => {
           label="HMA:"                  
           variant="standard"
           name="HMA"
-        //   value={email}
+          value={hma}
           onChange={e => setHma(e.target.value)}
         />
         <TextField
@@ -501,8 +572,8 @@ const funcChange = (event) => {
           label="Comorbidades:"                  
           variant="standard"
           name="comorbidades"
-        //   value={email}
-          onChange={e => setComorbidades(e.target.value)}
+          value={comobirdades}
+          onChange={e => setComobirdades(e.target.value)}
         />
         <TextField
           required
@@ -510,7 +581,7 @@ const funcChange = (event) => {
           label="Medicações em Uso:"                  
           variant="standard"
           name="medicacoes"
-        //   value={email}
+          value={medicacaoEmUso}
           onChange={e => setMedicacaoEmUso(e.target.value)}
         />
         <TextField
@@ -519,8 +590,8 @@ const funcChange = (event) => {
           label="Medicações relacionada Lesão:"                  
           variant="standard"
           name="medicoes-lesao"
-        //   value={email}
-          onChange={e => setMedicacaoRelacionadaLesao(e.target.value)}
+          value={medicacaoLesao}
+          onChange={e => setMedicacaoLesao(e.target.value)}
         />
         <div>
             <TextField
@@ -565,12 +636,12 @@ const funcChange = (event) => {
             id="id-dominante"
             select
             label="Membro Dominante?"
-            value={mdominante}
+            value={membroDominante}
             onChange={dominanteChange}
             helperText="Esquerdo ou direito"
             variant="standard"
             >
-            {fumaVet.map((option) => (
+            {dominateVet.map((option) => (
                 <MenuItem key={option.value} value={option.value} name="fuma"
                 //onChange={funcionarioChange}
                 >
@@ -584,7 +655,7 @@ const funcChange = (event) => {
             id="id-lesao"
             select
             label="Histórico Lesão?"
-            value={lesao}
+            value={historicoLesao}
             onChange={lesaoChange}
             helperText="Sim ou não"
             variant="standard"
@@ -655,7 +726,7 @@ const funcChange = (event) => {
           placeholder="Avaliação da postura"          
           variant="standard"
           name="avaliacao-postural"
-        //   value={avalicaoPostural}
+          value={avaliacaoPostural}
           onChange={e => setAvaliacaoPostural(e.target.value)}
         />
         
@@ -666,7 +737,7 @@ const funcChange = (event) => {
           placeholder="Membros Ativos"          
           variant="standard"
           name="membros-ativos"
-        //   value={carteiraConvenio}
+          value={membrosAtivos}
           onChange={e => setMembrosAtivos(e.target.value)}
         />
 
@@ -677,8 +748,8 @@ const funcChange = (event) => {
           placeholder="Membros Passivos"          
           variant="standard"
           name="membros-passivos"
-        //   value={carteiraConvenio}
-          onChange={e => setMembrosPassivo(e.target.value)}
+          value={membrosPassivos}
+          onChange={e => setMembrosPassivos(e.target.value)}
         />
 
         <TextField
@@ -688,7 +759,7 @@ const funcChange = (event) => {
           placeholder="Testes especiais"          
           variant="standard"
           name="testes-especiais"
-        //   value={carteiraConvenio}
+          value={testesEspeciais}
           onChange={e => setTestesEspeciais(e.target.value)}
         />
 
@@ -699,7 +770,7 @@ const funcChange = (event) => {
           placeholder="Testes funcionais"          
           variant="standard"
           name="testes-funcionais"
-        //   value={carteiraConvenio}
+          value={testesFuncionais}
           onChange={e => setTesteFuncionais(e.target.value)}
         />
         <TextField
@@ -709,8 +780,8 @@ const funcChange = (event) => {
           placeholder="Outras Observações"          
           variant="standard"
           name="outras-observações"
-        //   value={carteiraConvenio}
-          onChange={e => setOutrasObs(e.target.value)}
+          value={outrasObservacoes}
+          onChange={e => setOutrasObservacoes(e.target.value)}
         />
         
          <TextField
@@ -720,7 +791,7 @@ const funcChange = (event) => {
           placeholder="Conduta curto prazo"          
           variant="standard"
           name="conduta-curto"
-        //   value={carteiraConvenio}
+          value={condutaCurtoPrazo}
           onChange={e => setCondutaCurtoPrazo(e.target.value)}
         />
         <TextField
@@ -730,7 +801,7 @@ const funcChange = (event) => {
           placeholder="Conduta médio prazo"          
           variant="standard"
           name="conduta-medio"
-        //   value={carteiraConvenio}
+          value={condutaMedioPrazo}
           onChange={e => setCondutaMedioPrazo(e.target.value)}
         />
         <TextField
@@ -740,7 +811,7 @@ const funcChange = (event) => {
           placeholder="Conduta Longo prazo"          
           variant="standard"
           name="conduta-longo"
-        //   value={carteiraConvenio}
+          value={condutaLongoPrazo}
           onChange={e => setCondutaLongoPrazo(e.target.value)}
         />
       </div>      

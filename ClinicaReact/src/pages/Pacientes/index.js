@@ -26,14 +26,14 @@ import EditIcon from '@mui/icons-material/Edit';
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'firstName',
+      field: 'nomePaciente',
       headerName: 'Nome',
       width: 150,
       editable: true,
     },
     {
-      field: 'buttonEditar',
-      headerName: 'Edição',
+      field: 'cpf',
+      headerName: 'CPF',
       width: 150,
       editable: true,
     },
@@ -53,7 +53,11 @@ export default function Pacientes(){
     
     
     const rows =  paciente.map( pacientes => (
-        {id:pacientes.id,firstName: pacientes.nome, buttonEditar: 'editar'}
+        {
+            id:pacientes.id,
+            nomePaciente: pacientes.nome,
+            cpf: pacientes.cpf
+        }
     ))
    
 
@@ -107,6 +111,7 @@ export default function Pacientes(){
                 alert('Selecione um paciente pra excluir.');
             }
             else if (window.confirm('Deseja deletar o paciente id = ' + id + ' ?')) {
+
                 await api.delete(`api/pacientes/${id}`, authorization);
 
                 setPaciente(paciente.filter(pacient => pacient.id !== id));
@@ -133,7 +138,7 @@ export default function Pacientes(){
             <Button variant="contained" size="small" startIcon={<AccessibilityNewIcon />} color="success" onClick={() => navigate('/paciente/novo/0')}>Novo</Button> {' '}   
             {rows.length === 0 ? <Button variant="contained" size="small" startIcon={<EditIcon />} disabled >Editar</Button> : <Button variant="contained" size="small" startIcon={<EditIcon />} onClick={() => editarPaciente(idSelecionado)}>Editar</Button>}{' '}    
             <Button variant="contained" size="small" startIcon={<DeleteIcon />} color="error" onClick={() => deletarPaciente(idSelecionado)}>Excluir</Button> {' '}   
-
+            <h4>Cadastrado Paciente</h4> 
             <DataGrid
            
             rows={rows}

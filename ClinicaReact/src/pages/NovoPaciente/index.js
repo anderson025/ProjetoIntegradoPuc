@@ -33,7 +33,7 @@ const [cep, setCep] = useState('');
 const [cidade, setCidade] = useState(''); 
 const [estado, setEstado] = useState(''); 
 const [uf, setUf] = useState(''); 
-//const [enderecoId, setEnderecoId] = useState(''); 
+const [enderecoId, setEnderecoId] = useState(''); 
 
 
 const [sexo, setSexo] = useState(0);
@@ -87,7 +87,13 @@ const navigate = useNavigate();
             loadPaciente();
         }
     }, [])
-
+    
+    //Formatacao da data
+    const opcao = {
+      year:"numeric",
+      month:"numeric",
+      day:"numeric"
+    }
     async function loadPaciente(){
         try {
             const response = await api.get(`api/pacientes/${pacienteId}`, authorization);
@@ -95,7 +101,7 @@ const navigate = useNavigate();
             setId(response.data.id);
             setNome(response.data.nome);
             setIdade(response.data.idade);
-            setDataNasci(response.data.dataNasci);
+            setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
             setRg(response.data.rg);
             setCpf(response.data.cpf);
             setSexo(response.data.sexo);
@@ -114,7 +120,7 @@ const navigate = useNavigate();
             setEstado(response.data.endereco.estado);
             setUf(response.data.endereco.uf);
             
-            //setEnderecoId(response.data.enderecoId);
+            setEnderecoId(response.data.enderecoId);
 
         } catch (error) {
             alert('Erro ao tentar recuperar o Pacientes' + error);
@@ -127,10 +133,14 @@ const navigate = useNavigate();
 
         event.preventDefault();  
         
+        var nascimento = document.getElementById("id-data-nascimento").value;
+        var [dia,mes,ano] = nascimento.split("/");   
+            
+        var dataNascimento = `${ano}-${mes}-${dia}T03:00:00.000Z`; 
 
         const data = {
             nome,
-            dataNasci,
+            dataNascimento,
             idade,            
             rg,
             cpf,
@@ -155,6 +165,35 @@ const navigate = useNavigate();
 
         }
 
+        const dataAtualiza = {
+          id,
+          nome,
+          dataNascimento,
+          idade,            
+          rg,
+          cpf,
+          sexo,
+          situacao,
+          telefone,
+          celular,            
+          profissao,
+          convenio,
+          carteiraConvenio,
+          endereco:{
+              rua,
+              numero,
+              bairro,
+              cep,
+              cidade,
+              estado,
+              uf
+          },
+          enderecoId,
+          email            
+         
+
+      }
+
        
 
         try {
@@ -162,18 +201,30 @@ const navigate = useNavigate();
             if (pacienteId ==='0') {
                 
                 await api.post('/api/pacientes', data, authorization);
+                alert('Paciente cadastrado com sucesso!')
+                navigate('/pacientes');
             }
             else{
-                data.id = id;
-                data.enderecoId = id;                
-                await api.put(`api/pacientes/${id}`,data,authorization);
+                              
+                await api.put(`api/pacientes/${id}`,dataAtualiza,authorization);
+                alert('Paciente Atualizado com sucesso!')
+                navigate('/pacientes');
             }
 
         } catch (error) {
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
             alert('Erro ao gravar paciente' + error);
+           
+          }
+           
         }
 
-        navigate('/pacientes');
+       
     }
 
 

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace ClinicaFisioterapia.Services {
 	public interface IAvaliacaoService {
 
-		Task<ExibeAvaliacaoDTO> BuscaAvaliacaoPorId(Int32 id);
+		Task<EditarAvaliacaoDTO> BuscaAvaliacaoPorId(Int32 id);
 
-		Task<ExibeAvaliacaoDTO> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto);
+		Task<EditarAvaliacaoDTO> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto);
 
 		Task ApagaAvaliacao(Int32 id);
 
@@ -18,7 +18,7 @@ namespace ClinicaFisioterapia.Services {
 
 		Task<IEnumerable<Avaliacao>> BuscaPorData(String data);
 
-		Task<IEnumerable<ExibeAvaliacaoDTO>> BuscaTodasAvaliacoes();
+		Task<IEnumerable<EditarAvaliacaoDTO>> BuscaTodasAvaliacoes();
 
 		
 

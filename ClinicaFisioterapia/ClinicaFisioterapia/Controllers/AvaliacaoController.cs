@@ -40,7 +40,7 @@ namespace ClinicaFisioterapia.Controllers {
 
 
 		[HttpGet("{id:int}", Name = "BuscaAvaliacaoPorId")]
-		public async Task<ActionResult<ExibeAvaliacaoDTO>> BuscaAvaliacaoPorId(Int32 id) {
+		public async Task<ActionResult<EditarAvaliacaoDTO>> BuscaAvaliacaoPorId(Int32 id) {
 
 			try {
 				var avaliacao = await _avaliacaoService.BuscaAvaliacaoPorId(id);
@@ -61,7 +61,7 @@ namespace ClinicaFisioterapia.Controllers {
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IAsyncEnumerable<ExibeAvaliacaoDTO>>> BuscaTodasAvaliacoes() {
+		public async Task<ActionResult<IAsyncEnumerable<EditarAvaliacaoDTO>>> BuscaTodasAvaliacoes() {
 
 			try {
 				var avaliacao = await _avaliacaoService.BuscaTodasAvaliacoes();

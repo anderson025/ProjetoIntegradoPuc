@@ -35,6 +35,11 @@ namespace ClinicaFisioterapia.Context {
 				.WithMany(funcionario => funcionario.Agendamentos)
 				.HasForeignKey(funcionario => funcionario.IdFuncionario);
 
+			modelBuilder.Entity<Agendamento>()
+				.HasOne(agendamento => agendamento.Avaliacao)
+				.WithOne(avaliacao => avaliacao.Agendamento)
+				.HasForeignKey<Agendamento>(avaliacao => avaliacao.IdAgendamento);
+
 			modelBuilder.Entity<Avaliacao>()
 				.HasOne(avaliacao => avaliacao.Funcionario)
 				.WithMany(funcionario => funcionario.Avaliacoes)
@@ -89,6 +94,9 @@ namespace ClinicaFisioterapia.Context {
 		public DbSet<Medico> Medico { get; set; }
 		public DbSet<Sessao> Sessao { get; set; }
 		public DbSet<Evolucao> Evolucao { get; set; }
+
 		
+		
+
 	}
 }

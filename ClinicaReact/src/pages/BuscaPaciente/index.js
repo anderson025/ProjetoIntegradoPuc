@@ -79,9 +79,15 @@ export default function BuscaPaciente(){
     }
 
     useEffect ( () => {
+        
         api.get('api/Pacientes', authorization)
         .then(response => {setPaciente(response.data);
         },token)
+       
+
+        
+
+
     },[])
 
     var idSelecionado = 0;

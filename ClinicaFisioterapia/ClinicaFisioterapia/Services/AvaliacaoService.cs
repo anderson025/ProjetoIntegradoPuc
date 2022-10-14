@@ -20,13 +20,13 @@ namespace ClinicaFisioterapia.Services {
 			_mapper = mapper;
 		}
 
-		public async Task<ExibeAvaliacaoDTO> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto) {
+		public async Task<EditarAvaliacaoDTO> AdicionaAvaliacao(AvaliacaoDTO avaliacaoDto) {
 
 
 			Avaliacao avaliacao = _mapper.Map<Avaliacao>(avaliacaoDto);
 			_context.Avaliacao.Add(avaliacao);
 			await _context.SaveChangesAsync();
-			return _mapper.Map<ExibeAvaliacaoDTO>(avaliacao);
+			return _mapper.Map<EditarAvaliacaoDTO>(avaliacao);
 
 		}
 
@@ -43,9 +43,9 @@ namespace ClinicaFisioterapia.Services {
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<ExibeAvaliacaoDTO> BuscaAvaliacaoPorId(Int32 id) {
+		public async Task<EditarAvaliacaoDTO> BuscaAvaliacaoPorId(Int32 id) {
 			var avaliacao = await _context.Avaliacao.FindAsync(id);
-			return _mapper.Map<ExibeAvaliacaoDTO>(avaliacao);
+			return _mapper.Map<EditarAvaliacaoDTO>(avaliacao);
 		}
 
 		public Task<IEnumerable<Avaliacao>> BuscaPorData(string data) {
@@ -60,11 +60,11 @@ namespace ClinicaFisioterapia.Services {
 			throw new System.NotImplementedException();
 		}
 
-		public async Task<IEnumerable<ExibeAvaliacaoDTO>> BuscaTodasAvaliacoes() {
+		public async Task<IEnumerable<EditarAvaliacaoDTO>> BuscaTodasAvaliacoes() {
 
 			try {
 				var avaliacao = await _context.Avaliacao.ToListAsync();
-				return _mapper.Map<IEnumerable<ExibeAvaliacaoDTO>>(avaliacao);
+				return _mapper.Map<IEnumerable<EditarAvaliacaoDTO>>(avaliacao);
 			}
 			catch {
 

@@ -143,7 +143,7 @@ export default function Avaliacao(){
             <Button variant="contained" size="small" startIcon={<AccessibilityNewIcon />} color="success" onClick={() => editarAvaliacao(idPaciente)}>Nova</Button> {' '}   
             {/* {rows.length === 0 ? <Button variant="contained"  disabled >Editar Avaliacao</Button> : <Button variant="contained" onClick={() => editarAvaliacao(1)}>Editar Avaliacao</Button>} */}
             <Button variant="contained" size="small" onClick={() => navigate('/avaliacao/todasAvaliacoes')}>Todas Avaliações</Button> {' '}   
-            <h4>Agendamentos pendetes</h4>
+            <h4>Agendamentos pendentes</h4>
             <DataGrid
            
            rows={rows}

@@ -17,6 +17,9 @@ namespace ClinicaFisioterapia.Profiles {
 			CreateMap<Paciente, PacienteDTO>();
 			CreateMap<PacienteDTO, Paciente>();
 
+			CreateMap<Avaliacao, EditarAvaliacaoDTO>();
+			CreateMap<EditarAvaliacaoDTO, Avaliacao>();
+
 			CreateMap<Avaliacao, ExibeAvaliacaoDTO>();
 			CreateMap<ExibeAvaliacaoDTO, Avaliacao>();
 		}

@@ -28,6 +28,9 @@ namespace ClinicaFisioterapia.Models {
 
 		public int PendenteAvaliacao { get; set; }
 
+		[JsonIgnore]
+		public virtual Avaliacao Avaliacao { get; set; }
+
 
 	}
 

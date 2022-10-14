@@ -23,9 +23,26 @@ const columns = [
      headerName: 'ID',
       width: 90 
   },
+  
+  { 
+    field: 'idPaciente',
+     headerName: 'Id Paciente',
+      width: 90 
+  },
   {
-    field: 'firstName',
-    headerName: 'Nome',
+    field: 'NomePaciente',
+    headerName: 'Nome Paciente',
+    width: 150,
+    editable: true,
+  },
+  { 
+    field: 'idFuncionario',
+     headerName: 'Id Funcionario',
+      width: 90 
+  },
+  {
+    field: 'NomeFuncionario',
+    headerName: 'Nome Funcionario',
     width: 150,
     editable: true,
   }
@@ -36,20 +53,31 @@ const columns = [
 
 export default function TodasAvaliacoes(){
 
-    const [nome, setNome] = useState('');
-    const [funcionario, setFuncionario] = useState([]);
+    const [id, setId] = useState('');
+    const [idFuncionario, setIdFuncionario] = useState('');
+    const [idPaciente, setIdPaciente] = useState('');
+    const [nomePaciente, setNomePaciente] = useState('');
+    const [nomeFuncionario, setNomeFuncionario] = useState('');
+    const [avaliacao, setAvaliacao] = useState([]);
     const navigate = useNavigate();
 
     const email = localStorage.getItem('email');
     const token = localStorage.getItem('token');
+    const [idAgendamento, setIdAgendamento] = useState('');
+    const [dataAgendamento, setDataAgendamento] = useState('');
     
     
-    
-    const rows =  funcionario.map( funcionarios => (
+    const rows =  avaliacao.map( avaliacoes => (
+
         {   
-            id:funcionarios.id,
-            firstName: funcionarios.nome
+            id:avaliacoes.id,
+            idPaciente: avaliacoes.idPaciente,
+            NomePaciente: avaliacoes.nomePaciente,
+            idFuncionario: avaliacoes.idFuncionario,
+            NomeFuncionario: avaliacoes.nomeFuncionario
         }
+
+
     ))
    
 
@@ -60,24 +88,28 @@ export default function TodasAvaliacoes(){
     }
 
     useEffect ( () => {
+        loadAvaliacao();
+        loadPaciente();
+
         api.get('api/Avaliacao', authorization)
-        .then(response => {setFuncionario(response.data);
+        .then(response => {setAvaliacao(response.data);
         },token)
+
     },[])
 
-    async function editarFuncionario(id){
+    async function editarAvaliacao(id){
         try {           
            
            if (idSelecionado === 0) {
-                alert("Selecione um Funcionario para Editar.");  
+                alert("Selecione uma Avaliação para Editar.");  
            }
            else{
-                navigate(`/funcionario/novo/${id}`);
+                navigate(`/avaliacao/editar/${id}`);
            }
             
             
         } catch (error) {
-            alert('Não foi possível editar o funcionário' + error);
+            alert('Não foi possível editar a Avaliação' + error);
         }
     }
 
@@ -100,37 +132,92 @@ export default function TodasAvaliacoes(){
       };
 
       async function deletarFuncionario(id){
-        try {
-            if (window.confirm('Deseja deletar o funcionario id = ' + id + ' ?')) {
-                await api.delete(`api/Funcionarios/${id}`, authorization);
 
-                setFuncionario(funcionario.filter(func => func.id !== id));
+        var pendenteAvaliacao = 0;
+
+        var nomeFunciorio = nomeFuncionario;
+
+        const atualizaAgendamento = {
+            idAgendamento,
+            idFuncionario,
+            nomeFunciorio,
+            idPaciente,
+            nomePaciente,
+            dataAgendamento,            
+            pendenteAvaliacao
+        }
+
+        try {
+            if (window.confirm('Deseja deletar a avaliação id = ' + id + ' ?')) {
+
+                await api.delete(`api/Avaliacao/${id}`, authorization);
+
+                await api.put(`api/agendamento/${idAgendamento}`, atualizaAgendamento ,authorization);
+
+                setAvaliacao(avaliacao.filter(avalia => avalia.id !== id));
             }
         } catch (error) {
-            alert('Não foi possível excluir o funcionario');
+            alert('Não foi possível excluir a Avaliação');
         }
 
       }
 
-    //   async function loadAvaliacao(){
-    //     try {
-    //         const response = await api.get('api/avaliacao/', authorization);
+      async function loadPaciente(){
+        try {
+            const response = await api.get(`api/pacientes/${idPaciente}`, authorization);
             
-    //         setId(response.data.id);
-    //         setNome(response.data.nome);
-    //         setIdade(response.data.idade);
-    //         setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
+            // setIdPaciente(response.data.id);
+            // setNomePaciente(response.data.nome);
+            // setIdade(response.data.idade);
+            // setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
 
-    //         //agendamento
-    //         setIdAgendamento(response.data.agendamento.idAgendamento);
-    //         setDataAgendamento(response.data.agendamento.dataAgendamento);
+            //agendamento
+            setIdAgendamento(response.data.agendamento.idAgendamento);
+            setDataAgendamento(response.data.agendamento.dataAgendamento);
             
 
-    //     } catch (error) {
-    //         alert('Erro ao tentar recuperar o Pacientes' + error);
-    //         navigate('/avaliacao');
-    //     }
-    // }
+        } catch (error) {
+
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
+            alert('Erro ao tentar recuperar o Pacientes' + error);
+            navigate('/avaliacao');
+          }
+            
+        }
+    }
+
+    async function loadAvaliacao(){
+        try {
+
+            const response = await api.get('api/avaliacao', authorization);
+            
+            setId(response.data.id);
+            setNomePaciente(response.data.nomePaciente);
+            setNomeFuncionario(response.data.nomeFuncionario);
+            setIdPaciente(response.data.idPaciente);
+            setIdFuncionario(response.data.idFuncionario);           
+
+           
+
+        } catch (error) {
+
+            if(error.message.includes("401")){
+                localStorage.clear();
+                localStorage.setItem('token', '');                        
+                navigate('/');
+            }
+            else{
+                alert('Erro ao tentar recuperar o Avaliação' + error);                
+                navigate('/avaliacao');
+            }
+            
+        }
+    }
 
     return(  
         
@@ -148,9 +235,9 @@ export default function TodasAvaliacoes(){
 
             
             {/* <Button variant="contained" size="small" startIcon={<AccessibilityNewIcon />} color="success" onClick={() => navigate('/funcionario/novo/0')}>Novo</Button> {' '}    */}
-            {rows.length === 0 ? <Button variant="contained" size="small" startIcon={<EditIcon />}  disabled >Editar</Button> : <Button variant="contained" size="small"  startIcon={<EditIcon />}  onClick={() => editarFuncionario(idSelecionado)}>Editar</Button>}{' '} 
+            {rows.length === 0 ? <Button variant="contained" size="small" startIcon={<EditIcon />}  disabled >Editar</Button> : <Button variant="contained" size="small"  startIcon={<EditIcon />}  onClick={() => editarAvaliacao(idSelecionado)}>Editar</Button>}{' '} 
             <Button variant="contained" size="small" startIcon={<DeleteIcon />} color="error" onClick={() => deletarFuncionario(idSelecionado)}>Excluir</Button> {' '}   
-       
+            <h4>Todas Avaliações</h4>
             <DataGrid
            
             rows={rows}

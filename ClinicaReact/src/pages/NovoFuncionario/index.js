@@ -36,8 +36,7 @@ const [estado, setEstado] = useState('');
 const [uf, setUf] = useState(''); 
 const [usuario, setUsuario] = useState(''); 
 const [senha, setSenha] = useState(''); 
-//const [enderecoId, setEnderecoId] = useState(''); 
-
+const [enderecoId, setEnderecoId] = useState(''); 
 
 const [sexo, setSexo] = useState(0);
 const [profissao, setProfissao] = useState(0);
@@ -91,6 +90,13 @@ const navigate = useNavigate();
         }
     }, [])
 
+    //Formatacao da data
+    const opcao = {
+      year:"numeric",
+      month:"numeric",
+      day:"numeric"
+    }
+
     async function loadFuncionario(){
         try {
             const response = await api.get(`api/funcionarios/${funcionarioId}`, authorization);
@@ -98,7 +104,7 @@ const navigate = useNavigate();
             setId(response.data.id);
             setNome(response.data.nome);
             setIdade(response.data.idade);
-            setDataNasci(response.data.dataNasci);
+            setDataNasci(new Date(response.data.dataNascimento).toLocaleDateString("pt-br", opcao));
             setRg(response.data.rg);
             setCpf(response.data.cpf);
             setSexo(response.data.sexo);
@@ -118,23 +124,39 @@ const navigate = useNavigate();
             setUf(response.data.endereco.uf);
             setUsuario(response.data.usuario);
             setSenha(response.data.senha);
-            //setEnderecoId(response.data.enderecoId);
+            setEnderecoId(response.data.enderecoId);
 
         } catch (error) {
+
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
             alert('Erro ao tentar recuperar o Funcionario' + error);
             navigate('/funcionarios');
+          }
+            
         }
     }
     
 
     async function saveOrUpdate(event){
 
-        event.preventDefault();  
+        event.preventDefault(); 
+        
+        var nascimento = document.getElementById("id-data-nascimento").value;
+        var [dia,mes,ano] = nascimento.split("/");   
+            
+        var dataNascimento = `${ano}-${mes}-${dia}T03:00:00.000Z`;       
+        
         
 
         const data = {
+
             nome,
-            dataNasci,
+            dataNascimento,
             idade,            
             rg,
             cpf,
@@ -160,6 +182,35 @@ const navigate = useNavigate();
 
         }
 
+        const dataAtualiza = {
+          id,
+          nome,
+          dataNascimento,
+          idade,            
+          rg,
+          cpf,
+          sexo,
+          situacao,
+          telefone,
+          celular,            
+          profissao,
+          convenio,
+          carteiraConvenio,
+          endereco:{
+              rua,
+              numero,
+              bairro,
+              cep,
+              cidade,
+              estado,
+              uf
+          },
+          enderecoId,
+          email,            
+          usuario,
+          senha
+
+      }
        
 
         try {
@@ -167,18 +218,30 @@ const navigate = useNavigate();
             if (funcionarioId ==='0') {
                 
                 await api.post('/api/Funcionarios', data, authorization);
+                alert('Funcionario cadastrado com sucesso!');
+                navigate('/funcionarios');
             }
             else{
-                data.id = id;
-                data.enderecoId = id;                
-                await api.put(`api/Funcionarios/${id}`,data,authorization);
+                                               
+                await api.put(`api/Funcionarios/${id}`,dataAtualiza,authorization);
+                alert('Funcionario atualizado com sucesso!');
+                navigate('/funcionarios');
             }
 
         } catch (error) {
+
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
             alert('Erro ao gravar funcionario' + error);
+          }
+            
         }
 
-        navigate('/funcionarios');
+        
     }
 
     return(

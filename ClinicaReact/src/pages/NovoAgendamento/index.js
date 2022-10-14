@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import Pacientes from "../Pacientes";
 import api from "../../services/api";
 import {useParams} from "react-router-dom";
+import { AndroidOutlined } from "@mui/icons-material";
 
 export default function NovoAgendamento(){  
 
@@ -57,13 +58,19 @@ const [idFunc , setIdFunc] = useState(null);
 const [nomeFunc, setNomeFunc] = useState('');
 const [comboFunc, setComboFunc] = useState(1);
 
+// const dataAgendada = '';
+// var agenda = ''
+// var dataFull = ''
+// const [full, ano,dia,mes] = '';
+
 const agendaChange = (event) =>{
 
     var agenda = document.getElementById("id-data-agendamento").value;
-    var dataFull = new Date(agenda).toISOString();
-    //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
-    const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
-    const [full, ano,dia,mes] = regex.exec(dataFull);
+    var [dia,mes,ano] = agenda.split("/");
+    //var dataFull = new Date(agenda).toISOString();
+    // //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
+    // const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
+    // [full, ano,dia,mes] = regex.exec(dataFull);
         
     const dataAgendada = `${ano}-${mes}-${dia}T03:00:00.000Z`;
     setDataAgendamento(dataAgendada);
@@ -71,45 +78,23 @@ const agendaChange = (event) =>{
     
 }
 
-    
-
-  const sexoChange = (event) => {
-    setSexo(event.target.value);
-  };
 
   const funcChange = (event) => {
-    setComboFunc(event.target.value);        
-  };
+    setComboFunc(event.target.value);    
     
+  };    
 
-    const sexoVet = [
-        {
-          value: '0',
-          label: 'Masculino',
-        },
-        {
-          value: '1',
-          label: 'Feminino',
-        },
+    // var funcionarioVet = funcionario.map(funcionarios =>(
+    //     [
+    //     {
+    //         value: funcionarios.id,
+    //         label: funcionarios.nome
+    //     }
         
-      ];
+    //   ]
 
-      
-      
-    //   var funcVet =  funcionario.map( funcionarios => (
-    //     {value:funcionarios.id,label: funcionarios.nome}
-    //     ));
-      
-      var funcionarioVet = [
-        {
-            value: '1',
-            label: "Fisioterapeuta 1"
-        },
-        {
-            value: '2',
-            label: "Fisioterapeuta 2"
-        }
-      ];
+    // ));
+        
         
       const currencies = [
         {
@@ -138,30 +123,15 @@ const agendaChange = (event) =>{
            return; 
         } else {
             
-            //loadAgendamento()
+            
             loadPaciente();
+            loadFuncionario();            
             
             api.get('api/Funcionarios', authorization)
             .then(response => {setFuncionario(response.data);
             },token)
         }
-    }, [])
-
-    async function loadAgendamento(){
-        try {
-            
-            // const response = await api.get(`api/Agendamento/${pacienteId}`, authorization);
-            // var dataFormatada = new Date(response.data.dataAgendamento).toLocaleDateString("pt-br", opcao);
-            // setDataAgendamento(dataFormatada);
-            // setNome(response.data.nomePaciente);
-            // setId(response.data.idPaciente);
-
-            
-        } catch (error) {
-            alert('Erro ao tentar recuperar o Agendamento' + error);
-            navigate('/agenda');
-        }
-    }
+    }, [])    
 
     async function loadPaciente(){
         try {         
@@ -198,32 +168,40 @@ const agendaChange = (event) =>{
             alert('Erro ao tentar recuperar o Pacientes' + error);
             navigate('/agenda');
         }
+    }
+    async function loadFuncionario(){
+        try {
+            const response = await api.get(`api/funcionarios`, authorization);
+
+            setFuncionario(response.data);          
+            
+
+        } catch (error) {
+
+          if(error.message.includes("401")){
+            localStorage.clear();
+            localStorage.setItem('token', '');                        
+            navigate('/');
+          }
+          else{
+            alert('Erro ao tentar recuperar o Funcionario' + error);
+            navigate('/funcionarios');
+          }
+            
+        }
     }   
     
 
     async function saveOrUpdate(event){
 
         event.preventDefault(); 
-        var select = document.getElementById("id-fisio").textContent;      
+        
+        var select = document.getElementById("id-fisio").textContent;                      
         var nomeFunciorio = select;               
         var idFuncionario = comboFunc;
         var idPaciente = id;
-        var NomePaciente = nome;      
-
-        // var agenda = document.getElementById("id-data-agendamento").value;
-        // const dataFull = new Date(agenda).toISOString();
-        // dataAgendamento = dataFull;
-
-        // var agenda = document.getElementById("id-data-agendamento").value;
-        // var dataFull = new Date(agenda).toISOString();
-        // //const regex =  /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|2[0-9]|3[0-1])/
-        // const regex =  /^([0-9]{4})-(0[1-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])/
-        // const [full, ano,dia,mes] = regex.exec(dataFull);
-        
-        // const dataAgendada = `${ano}-${mes}-${dia}T03:00:00.000Z`;
-        // // var dataFull = new Date(agenda).toISOString();
-        // dataAgendamento = dataAgendada;        
-        
+        var NomePaciente = nome;     
+       
         const data = {
             idPaciente,
             idFuncionario,
@@ -316,11 +294,11 @@ const agendaChange = (event) =>{
                             helperText="Selecione o funcionario"
                             variant="standard"
                             >
-                            {funcionarioVet.map((option) => (
-                                <MenuItem key={option.value} value={option.value} name="fisio"
+                            {funcionario.map((funcionarios) => (
+                                <MenuItem key={funcionarios.id} value={funcionarios.id} name="fisio"
                                 
                                 >
-                                {option.label} 
+                                {funcionarios.nome} 
                                 </MenuItem>
                             ))}
 

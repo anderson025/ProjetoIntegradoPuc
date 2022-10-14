@@ -33,7 +33,9 @@ namespace ClinicaFisioterapia.Context.Dtos.Avaliacao {
 		public Double Altura { get; set; }
 		public string Diagnostico { get; set; }
 		public MembroDominante MembroDominante { get; set; }
+		
 		public bool HistoricoLesao { get; set; }
+		[JsonIgnore]
 		public String HistoricoLesaoDescricao { get; set; }
 		public String HMA { get; set; }
 		public String Comobirdades { get; set; }
@@ -41,10 +43,13 @@ namespace ClinicaFisioterapia.Context.Dtos.Avaliacao {
 		public String MedicacaoLesao { get; set; }
 		public bool DormeBem { get; set; }
 		public bool Fuma { get; set; }
+		[JsonIgnore]
 		public String ObservacaoFuma { get; set; }
 		public bool Cirurgia { get; set; }
+		[JsonIgnore]
 		public String ObservacaoCirurgia { get; set; }
 		public bool PraticaAtividadeFisica { get; set; }
+		[JsonIgnore]
 		public String ObservacaoAtividade { get; set; }
 		public String AvaliacaoPostural { get; set; }
 		public String MembrosAtivos { get; set; }
