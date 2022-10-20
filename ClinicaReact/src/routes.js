@@ -29,7 +29,7 @@ export default function MainRoutes() {
             <Route path="/agenda" element={<Agenda />} />
             <Route path="/agenda/novo/:pacienteId" element={<NovoAgendamento />} />
             <Route path="/avaliacao" element={<Avaliacao />} />
-            <Route path="/avaliacao/novo/:avaliacaoId" element={<NovaAvaliacao />} />
+            <Route path="/avaliacao/novo/:avaliacaoId, idselecionado" element={<NovaAvaliacao />} />
             <Route path="/avaliacao/editar/:avaliacaoId" element={<NovaAvaliacao />} />
             <Route path="/avaliacao/todasAvaliacoes" element={<TodasAvaliacoes />} />
             <Route path="/agenda/buscaPaciente" element={<BuscaPaciente />} />

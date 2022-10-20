@@ -35,10 +35,10 @@ namespace ClinicaFisioterapia.Context {
 				.WithMany(funcionario => funcionario.Agendamentos)
 				.HasForeignKey(funcionario => funcionario.IdFuncionario);
 
-			modelBuilder.Entity<Agendamento>()
-				.HasOne(agendamento => agendamento.Avaliacao)
-				.WithOne(avaliacao => avaliacao.Agendamento)
-				.HasForeignKey<Agendamento>(avaliacao => avaliacao.IdAgendamento);
+			//modelBuilder.Entity<Agendamento>()
+			//	.HasOne(agendamento => agendamento.Avaliacao)
+			//	.WithOne(avaliacao => avaliacao.Agendamento)
+			//	.HasForeignKey<Agendamento>(avaliacao => avaliacao.IdAgendamento);
 
 			modelBuilder.Entity<Avaliacao>()
 				.HasOne(avaliacao => avaliacao.Funcionario)

@@ -62,10 +62,10 @@ namespace ClinicaFisioterapia.Models {
 		[JsonIgnore]
 		public virtual List<Sessao> Sessoes { get; set; }
 
-		[JsonIgnore]
-		public virtual Agendamento Agendamento { get; set; }
-		[Required]
-		public int IdAgendamento { get; set; }
+		//[JsonIgnore]
+		//public virtual Agendamento Agendamento { get; set; }
+		//[Required]
+		//public int IdAgendamento { get; set; }
 
 
 	}

@@ -174,6 +174,8 @@ export default function TodasAvaliacoes(){
             //agendamento
             setIdAgendamento(response.data.agendamento.idAgendamento);
             setDataAgendamento(response.data.agendamento.dataAgendamento);
+
+            console.log(response);
             
 
         } catch (error) {

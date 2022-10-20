@@ -315,10 +315,7 @@ const funcChange = (event) => {
         var idFuncionario = comboFunc;
         //var idPaciente = id;
         var pendenteAvaliacao = 1;
-        //var nomePaciente = nome;
-        
-
-
+        //var nomePaciente = nome; 
         
         
         const atualizaAgendamento = {
